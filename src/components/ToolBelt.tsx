@@ -1,16 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import {
-  TextIcon,
-  ImageIcon,
-  FileIcon,
-  TableIcon,
-} from "@radix-ui/react-icons";
+import { TextIcon, ImageIcon, FileIcon } from "@radix-ui/react-icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { ToolBeltType } from "@/lib/constants";
+import { ToolBeltType, validToolBeltTypes } from "@/lib/constants";
 
 export const ToolBelt = () => {
   const router = useRouter();
@@ -29,7 +24,7 @@ export const ToolBelt = () => {
   };
 
   useEffect(() => {
-    if (toolBeltType) return;
+    if (validToolBeltTypes.includes(toolBeltType)) return;
     handleChange(ToolBeltType.TEXT)();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -41,6 +36,7 @@ export const ToolBelt = () => {
           <Button
             onClick={handleChange(ToolBeltType.TEXT)}
             variant={toolBeltType === ToolBeltType.TEXT ? "default" : "ghost"}
+            size={"sm"}
           >
             <TextIcon className="h-4 w-4 mr-2" />
             Text
@@ -50,6 +46,7 @@ export const ToolBelt = () => {
           <Button
             onClick={handleChange(ToolBeltType.IMAGE)}
             variant={toolBeltType === ToolBeltType.IMAGE ? "default" : "ghost"}
+            size={"sm"}
           >
             <ImageIcon className="h-4 w-4 mr-2" />
             Images
@@ -61,20 +58,10 @@ export const ToolBelt = () => {
             variant={
               toolBeltType === ToolBeltType.DOCUMENT ? "default" : "ghost"
             }
+            size={"sm"}
           >
             <FileIcon className="h-4 w-4 mr-2" />
             Documents
-          </Button>
-        </li>
-        <li>
-          <Button
-            onClick={handleChange(ToolBeltType.WEB_SITE)}
-            variant={
-              toolBeltType === ToolBeltType.WEB_SITE ? "default" : "ghost"
-            }
-          >
-            <TableIcon className="h-4 w-4 mr-2" />
-            Web sites
           </Button>
         </li>
       </ul>
