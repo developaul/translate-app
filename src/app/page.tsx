@@ -1,12 +1,15 @@
 import { NextPage } from "next";
 
-import { Button } from "@/components/ui/button";
+import { Header } from "@/containers/Header";
 
 const HomePage: NextPage = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Button>Click me</Button>
-    </main>
+    <>
+      <Header />
+      <main className="flex flex-col items-center justify-between min-h-screen p-24">
+        Translator
+      </main>
+    </>
   );
 };
 
