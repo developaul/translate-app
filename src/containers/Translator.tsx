@@ -1,9 +1,9 @@
-import { Toolbelt } from "@/components";
+import { ToolBelt } from "@/components";
 
 export const Translator = () => {
   return (
     <main className="container">
-      <Toolbelt />
+      <ToolBelt />
     </main>
   );
 };
