@@ -44,6 +44,7 @@ export const ToolBelt = () => {
         </li>
         <li>
           <Button
+            disabled
             onClick={handleChange(ToolBeltType.IMAGE)}
             variant={toolBeltType === ToolBeltType.IMAGE ? "default" : "ghost"}
             size={"sm"}
@@ -54,6 +55,7 @@ export const ToolBelt = () => {
         </li>
         <li>
           <Button
+            disabled
             onClick={handleChange(ToolBeltType.DOCUMENT)}
             variant={
               toolBeltType === ToolBeltType.DOCUMENT ? "default" : "ghost"
