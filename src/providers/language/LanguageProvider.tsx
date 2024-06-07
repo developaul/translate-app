@@ -2,11 +2,11 @@
 
 import { useState, PropsWithChildren, FC } from "react";
 
-import { translationContext } from "./TranslationContext";
+import { languageContext } from "./languageContext";
 import { DEFAULT_FROM_LANGUAGE, DEFAULT_TO_LANGUAGE } from "@/lib/constants";
 import { getFirstNextLanguage } from "@/lib/utils";
 
-export const TranslationProvider: FC<PropsWithChildren> = ({ children }) => {
+export const LanguageProvider: FC<PropsWithChildren> = ({ children }) => {
   const [fromLanguage, setFromLanguage] = useState(DEFAULT_FROM_LANGUAGE);
   const [toLanguage, setToLanguage] = useState(DEFAULT_TO_LANGUAGE);
 
@@ -36,7 +36,7 @@ export const TranslationProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    <translationContext.Provider
+    <languageContext.Provider
       value={{
         fromLanguage,
         toLanguage,
@@ -46,6 +46,6 @@ export const TranslationProvider: FC<PropsWithChildren> = ({ children }) => {
       }}
     >
       {children}
-    </translationContext.Provider>
+    </languageContext.Provider>
   );
 };

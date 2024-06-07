@@ -2,14 +2,12 @@
 
 import { createContext } from "react";
 
-interface TranslationContextArgs {
+export interface LanguageContextArgs {
   fromLanguage: string;
   toLanguage: string;
-  handleChangeToLanguage: (toLanguage: string) => void;
   handleChangeFromLanguage: (fromLanguage: string) => void;
+  handleChangeToLanguage: (toLanguage: string) => void;
   handleSwitchLanguage: () => void;
 }
 
-export const translationContext = createContext<TranslationContextArgs>(
-  {} as TranslationContextArgs
-);
+export const languageContext = createContext({} as LanguageContextArgs);

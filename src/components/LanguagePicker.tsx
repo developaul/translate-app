@@ -5,7 +5,7 @@ import { WidthIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { Combobox } from "./ui/combobox";
 import { languages } from "@/lib/constants";
-import { translationContext } from "@/providers";
+import { languageContext, textContext } from "@/providers";
 
 export const LanguagePicker = () => {
   const {
@@ -14,7 +14,14 @@ export const LanguagePicker = () => {
     handleChangeToLanguage,
     handleChangeFromLanguage,
     handleSwitchLanguage,
-  } = useContext(translationContext);
+  } = useContext(languageContext);
+
+  const { handleSetCompletion } = useContext(textContext);
+
+  const _handleSwitchLanguage = () => {
+    handleSwitchLanguage();
+    handleSetCompletion();
+  };
 
   return (
     <div className="flex items-center gap-2">
@@ -24,7 +31,7 @@ export const LanguagePicker = () => {
         onChange={handleChangeFromLanguage}
       />
 
-      <Button onClick={handleSwitchLanguage} variant="ghost" size="sm">
+      <Button onClick={_handleSwitchLanguage} variant="ghost" size="sm">
         <WidthIcon />
       </Button>
 

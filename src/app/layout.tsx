@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { ThemeProvider, TranslationProvider } from "@/providers";
+import { ThemeProvider, TextProvider, LanguageProvider } from "@/providers";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -30,7 +30,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TranslationProvider>{children}</TranslationProvider>
+          <LanguageProvider>
+            <TextProvider>{children}</TextProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
