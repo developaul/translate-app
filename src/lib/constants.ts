@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export const enum ToolBeltType {
   TEXT = "text",
   IMAGE = "image",
@@ -28,3 +30,5 @@ export const languages = [
   { value: "Portuguese", label: "Portuguese" },
   { value: "Russian", label: "Russian" },
 ];
+
+export const DEBOUNCE_TIME = 300;
