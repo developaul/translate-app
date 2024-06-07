@@ -21,7 +21,8 @@ import {
 
 interface Props {
   options: Option[];
-  defaultValue?: string;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 interface Option {
@@ -29,9 +30,8 @@ interface Option {
   label: string;
 }
 
-export const Combobox: FC<Props> = ({ options, defaultValue }) => {
+export const Combobox: FC<Props> = ({ options, value, onChange }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(defaultValue ?? "");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -59,7 +59,7 @@ export const Combobox: FC<Props> = ({ options, defaultValue }) => {
                   key={option.value}
                   value={option.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                    onChange(currentValue === value ? "" : currentValue);
                     setOpen(false);
                   }}
                 >
