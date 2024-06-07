@@ -13,7 +13,7 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const [textToTranslate, setTextToTranslate] = useState("");
 
-  const { completion, complete } = useCompletion({
+  const { completion, complete, setCompletion } = useCompletion({
     api: "/api/translate",
     body: {
       fromLanguage,
@@ -21,8 +21,8 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
     },
   });
 
-  const handleDebouncedTextChange = useDebouncedCallback(() => {
-    complete(textToTranslate, { body: { fromLanguage, toLanguage } });
+  const handleDebouncedTextChange = useDebouncedCallback((value: string) => {
+    complete(value, { body: { fromLanguage, toLanguage } });
   }, DEBOUNCE_TIME);
 
   const handleChangeTextToTranslate = (
@@ -31,7 +31,13 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
     const { value } = event.target;
     setTextToTranslate(value);
 
-    handleDebouncedTextChange();
+    if (value.trim().length < 2) {
+      setCompletion("");
+
+      return;
+    }
+
+    handleDebouncedTextChange(value);
   };
 
   const handleSetCompletion = () => {
@@ -39,7 +45,7 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   useEffect(() => {
-    if (!textToTranslate.trim().length) return;
+    if (textToTranslate.trim().length < 2) return;
 
     complete(textToTranslate, { body: { fromLanguage, toLanguage } });
     // eslint-disable-next-line react-hooks/exhaustive-deps
