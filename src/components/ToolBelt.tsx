@@ -30,7 +30,7 @@ export const ToolBelt = () => {
   }, []);
 
   return (
-    <nav>
+    <nav className="mb-4">
       <ul className="flex items-center gap-2">
         <li>
           <Button
