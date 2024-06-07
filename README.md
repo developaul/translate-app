@@ -3,14 +3,14 @@
 </div>
 
 <div align="center">
-  <a href="https://svgl.app" target="_blank">
+  <a href="#" target="_blank">
     Discover
   </a>
 </div>
 
 <div align="center">
 
-![Next.js Badge](https://img.shields.io/badge/Next.js&nbsp;14-000?logo=nextdotjs&logoColor=fff&style=flat)
+![Next.js Badge](https://img.shields.io/badge/Next.js 14-000?logo=nextdotjs =fff =flat)
 ![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=fff&style=flat)
 
 </div>
