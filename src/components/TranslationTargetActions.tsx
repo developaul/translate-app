@@ -1,9 +1,17 @@
 import { FC, useContext } from "react";
-import { CopyIcon, SpeakerLoudIcon, StopIcon } from "@radix-ui/react-icons";
+import {
+  CopyIcon,
+  EnvelopeClosedIcon,
+  Share1Icon,
+  SpeakerLoudIcon,
+  StopIcon,
+  TwitterLogoIcon,
+} from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
 import { languageContext, speechSynthesisContext } from "@/providers";
 import { TranslationBoxTypes } from "@/lib/constants";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 interface TranslationTargetActionsProps {
   value: string;
@@ -70,6 +78,33 @@ export const TranslationTargetActions: FC<TranslationTargetActionsProps> = ({
         <Button onClick={handleCopyToClipboard} variant="ghost" size="icon">
           <CopyIcon />
         </Button>
+
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Share1Icon />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="flex flex-col gap-2 w-52 p-2">
+            <h4 className="text-center">Share this translation</h4>
+            <div className="flex items-center justify-center gap-1">
+              <a rel="noreferrer" href={`mailto:?body=${value}`}>
+                <Button variant="ghost" size="icon">
+                  <EnvelopeClosedIcon />
+                </Button>
+              </a>
+              <a
+                rel="noreferrer"
+                href={`https://twitter.com/intent/tweet?text=${value}`}
+                target="_blank"
+              >
+                <Button variant="ghost" size="icon">
+                  <TwitterLogoIcon />
+                </Button>
+              </a>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
     </footer>
   );
