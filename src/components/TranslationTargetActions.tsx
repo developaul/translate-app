@@ -108,7 +108,7 @@ export const TranslationTargetActions: FC<TranslationTargetActionsProps> = ({
             </TooltipContent>
           </Tooltip>
           <PopoverContent className="flex flex-col gap-2 w-52 p-2">
-            <h4 className="text-center">Share this translation</h4>
+            <h4 className="text-center font-bold">Share this translation</h4>
             <div className="flex items-center justify-center gap-1">
               <a rel="noreferrer" href={`mailto:?body=${value}`}>
                 <Button variant="ghost" size="icon">
