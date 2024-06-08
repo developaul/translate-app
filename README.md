@@ -4,9 +4,18 @@
 
 <div align="center">
   <a href="https://talk-translate.vercel.app" target="_blank">
-    Discover
+    <img src="https://github.com/developaul/translate-app/assets/59939843/1ff157b4-1660-44c2-bc98-418e9d53ca00" alt="Translate App" >
   </a>
 </div>
+
+<div align="center">  
+  <a href="https://talk-translate.vercel.app" target="_blank">
+    Discover
+  </a>
+  <span>&nbsp;✦&nbsp;</span>
+</div>
+
+</p>
 
 <div align="center">
 
