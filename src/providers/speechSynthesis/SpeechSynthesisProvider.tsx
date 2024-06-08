@@ -2,12 +2,15 @@
 
 import { FC, PropsWithChildren, useContext, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
+import { getVoiceByLanguage } from "@/lib/utils";
 import { speechSynthesisContext } from "./speechSynthesisContext";
+import { languageContext } from "../language";
 import { textContext } from "../text";
 
 export const SpeechSynthesisProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
+  const { toLanguage } = useContext(languageContext);
   const { completion } = useContext(textContext);
 
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -19,7 +22,11 @@ export const SpeechSynthesisProvider: FC<PropsWithChildren> = ({
       if (!speechSynthesis)
         throw new Error("SpeechSynthesis is not supported.");
 
+      const voice = getVoiceByLanguage(toLanguage);
+
       const utterance = new SpeechSynthesisUtterance(completion);
+
+      utterance.voice = voice;
 
       utterance.onstart = () => {
         setIsSpeaking(true);

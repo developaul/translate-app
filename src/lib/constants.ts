@@ -17,19 +17,35 @@ export const validToolBeltTypes = [
 export const DEFAULT_FROM_LANGUAGE = "Spanish";
 export const DEFAULT_TO_LANGUAGE = "English";
 
-export const languages = [
-  { value: "Spanish", label: "Spanish" },
-  { value: "English", label: "English" },
-  { value: "German", label: "German" },
-  { value: "Arabic", label: "Arabic" },
-  { value: "Bengali", label: "Bengali" },
-  { value: "French", label: "French" },
-  { value: "Hindi", label: "Hindi" },
-  { value: "Japanese", label: "Japanese" },
-  { value: "Mandarin", label: "Mandarin" },
-  { value: "Portuguese", label: "Portuguese" },
-  { value: "Russian", label: "Russian" },
+interface Language {
+  value: string;
+  label: string;
+  lang: string;
+}
+
+export const languages: Language[] = [
+  { value: "Spanish", label: "Spanish", lang: "es-ES" },
+  { value: "English", label: "English", lang: "en-US" },
+  { value: "German", label: "German", lang: "de-DE" },
+  { value: "Arabic", label: "Arabic", lang: "ar-SA" },
+  { value: "Bengali", label: "Bengali", lang: "bn-IN" },
+  { value: "French", label: "French", lang: "fr-FR" },
+  { value: "Hindi", label: "Hindi", lang: "hi-IN" },
+  { value: "Japanese", label: "Japanese", lang: "ja-JP" },
+  { value: "Mandarin", label: "Mandarin", lang: "zh-CN" },
+  { value: "Portuguese", label: "Portuguese", lang: "pt-BR" },
+  { value: "Russian", label: "Russian", lang: "ru-RU" },
 ];
+
+export const languageByValue: Record<string, Language> = languages.reduce(
+  (acc, language) => ({
+    ...acc,
+    [language.value]: language,
+  }),
+  {}
+);
+
+export const DEFAULT_LANG = "en-US";
 
 export const DEBOUNCE_TIME = 300;
 
