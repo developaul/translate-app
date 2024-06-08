@@ -17,16 +17,19 @@
 
 ## 🛠️ Stack
 
-- [**Nextjs**](https://nextjs.org/) - Web development, streamlined.
+- [**Nextjs**](https://nextjs.org/) - The React Framework for the Web.
 - [**Typescript**](https://www.typescriptlang.org/) - JavaScript with syntax for types.
-- [**Tailwindcss**](https://tailwindcss.com/) - A utility-first CSS framework for rapidly building custom designs.
-- [**clsx**](https://github.com/lukeed/clsx) + [**tailwind-merge**](https://github.com/dcastil/tailwind-merge) inspired by [shadcn/ui](https://ui.shadcn.com) - A tiny utility for constructing `className` strings conditionally.
+- [**TailwindCSS**](https://tailwindcss.com) + [**shadcn/ui**](https://ui.shadcn.com) & [**Radix Primitives**](https://www.radix-ui.com) - Design System.
+- [**Zod**](https://zod.dev/) - Schema declaration and validation library.
+- [**Bun**](https://bun.sh/) - A fast JavaScript runtime like Node.js.
+- [**ai**](https://sdk.vercel.ai/docs/introduction) - AI framework for TypeScript.
+- [**Vercel**](https://vercel.com/) - Deploy your app anywhere.
 
 ## 🚀 Getting Started
 
 You will need:
 
-- [Node.js 20+ (recommended 20.12.2 LTS)](https://nodejs.org/en/).
+- [Node.js 20+ (recommended 20.14 LTS)](https://nodejs.org/en/).
 - [Git](https://git-scm.com/).
 
 1. [Clone](https://github.com/developaul/translate-app.git) this repository locally:
@@ -45,7 +48,20 @@ npm install -g bun
 bun install
 ```
 
-3. start development server:
+3. Create a **.env** file with the following content:
+
+> 🚧 The environment variables must match the following schema
+
+```bash
+# OpenAI Provider =>
+OPENAI_API_KEY=
+```
+
+**OpenAI API Key**
+
+- [Get your OpenAI API key](https://platform.openai.com/account/api-keys).
+
+4. Run the development server:
 
 ```bash
 bun run dev
