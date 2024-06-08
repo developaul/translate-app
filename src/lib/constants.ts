@@ -61,3 +61,5 @@ export const defaultSpeakingState: SpeakingState = {
   isSpeaking: false,
   type: TranslationBoxTypes.SOURCE,
 };
+
+export const DEFAULT_TOOLTIP_DELAY_DURATION = 600;

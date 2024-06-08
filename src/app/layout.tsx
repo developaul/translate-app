@@ -9,6 +9,8 @@ import {
   SpeechSynthesisProvider,
 } from "@/providers";
 import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { DEFAULT_TOOLTIP_DELAY_DURATION } from "@/lib/constants";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -36,11 +38,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LanguageProvider>
-            <TextProvider>
-              <SpeechSynthesisProvider>{children}</SpeechSynthesisProvider>
-            </TextProvider>
-          </LanguageProvider>
+          <TooltipProvider delayDuration={DEFAULT_TOOLTIP_DELAY_DURATION}>
+            <LanguageProvider>
+              <TextProvider>
+                <SpeechSynthesisProvider>{children}</SpeechSynthesisProvider>
+              </TextProvider>
+            </LanguageProvider>
+          </TooltipProvider>
         </ThemeProvider>
         <Toaster />
       </body>

@@ -1,5 +1,6 @@
 import { FC, useContext } from "react";
 import { Button } from "./ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { KeyboardIcon, SpeakerLoudIcon, StopIcon } from "@radix-ui/react-icons";
 import {
   MAX_TEXT_TO_TRANSLATE_LENGTH,
@@ -35,21 +36,33 @@ export const TranslationSourceActions: FC<TranslationSourceActionsProps> = ({
   return (
     <footer className="flex items-center justify-between">
       <div className="flex items-center gap-2">
-        {value.length > 0 &&
-          (isSourceSpeaking ? (
-            <Button onClick={handleStopSpeaking} variant="ghost" size="icon">
-              <StopIcon />
-            </Button>
-          ) : (
-            <Button
-              disabled={speakingState.isSpeaking}
-              onClick={_handleStartSpeaking}
-              variant="ghost"
-              size="icon"
-            >
-              <SpeakerLoudIcon />
-            </Button>
-          ))}
+        {value.length > 0 && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              {isSourceSpeaking ? (
+                <Button
+                  onClick={handleStopSpeaking}
+                  variant="ghost"
+                  size="icon"
+                >
+                  <StopIcon />
+                </Button>
+              ) : (
+                <Button
+                  disabled={speakingState.isSpeaking}
+                  onClick={_handleStartSpeaking}
+                  variant="ghost"
+                  size="icon"
+                >
+                  <SpeakerLoudIcon />
+                </Button>
+              )}
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>Listen</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
       </div>
 
       <div className="flex items-center gap-2">

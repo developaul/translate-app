@@ -12,6 +12,7 @@ import { useToast } from "./ui/use-toast";
 import { languageContext, speechSynthesisContext } from "@/providers";
 import { TranslationBoxTypes } from "@/lib/constants";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 interface TranslationTargetActionsProps {
   value: string;
@@ -58,33 +59,54 @@ export const TranslationTargetActions: FC<TranslationTargetActionsProps> = ({
   return (
     <footer className="flex items-center justify-between">
       <div className="flex items-center gap-2">
-        {isTargetSpeaking ? (
-          <Button onClick={handleStopSpeaking} variant="ghost" size="icon">
-            <StopIcon />
-          </Button>
-        ) : (
-          <Button
-            disabled={speakingState.isSpeaking}
-            onClick={_handleStartSpeaking}
-            variant="ghost"
-            size="icon"
-          >
-            <SpeakerLoudIcon />
-          </Button>
-        )}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            {isTargetSpeaking ? (
+              <Button onClick={handleStopSpeaking} variant="ghost" size="icon">
+                <StopIcon />
+              </Button>
+            ) : (
+              <Button
+                disabled={speakingState.isSpeaking}
+                onClick={_handleStartSpeaking}
+                variant="ghost"
+                size="icon"
+              >
+                <SpeakerLoudIcon />
+              </Button>
+            )}
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            <p>Listen</p>
+          </TooltipContent>
+        </Tooltip>
       </div>
 
       <div className="flex items-center gap-2">
-        <Button onClick={handleCopyToClipboard} variant="ghost" size="icon">
-          <CopyIcon />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button onClick={handleCopyToClipboard} variant="ghost" size="icon">
+              <CopyIcon />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            <p>Copy translation</p>
+          </TooltipContent>
+        </Tooltip>
 
         <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <Share1Icon />
-            </Button>
-          </PopoverTrigger>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Share1Icon />
+                </Button>
+              </PopoverTrigger>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>Share translation</p>
+            </TooltipContent>
+          </Tooltip>
           <PopoverContent className="flex flex-col gap-2 w-52 p-2">
             <h4 className="text-center">Share this translation</h4>
             <div className="flex items-center justify-center gap-1">

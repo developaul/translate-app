@@ -10,6 +10,7 @@ import {
   speechSynthesisContext,
   textContext,
 } from "@/providers";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export const LanguagePicker = () => {
   const {
@@ -48,9 +49,16 @@ export const LanguagePicker = () => {
         onChange={_handleChangeFromLanguage}
       />
 
-      <Button onClick={_handleSwitchLanguage} variant="ghost" size="sm">
-        <WidthIcon />
-      </Button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button onClick={_handleSwitchLanguage} variant="ghost" size="sm">
+            <WidthIcon />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">
+          <p>Exchange languages</p>
+        </TooltipContent>
+      </Tooltip>
 
       <Combobox
         options={languages}
