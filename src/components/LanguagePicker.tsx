@@ -5,7 +5,11 @@ import { WidthIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { Combobox } from "./ui/combobox";
 import { languages } from "@/lib/constants";
-import { languageContext, textContext } from "@/providers";
+import {
+  languageContext,
+  speechSynthesisContext,
+  textContext,
+} from "@/providers";
 
 export const LanguagePicker = () => {
   const {
@@ -18,9 +22,22 @@ export const LanguagePicker = () => {
 
   const { handleSetCompletion } = useContext(textContext);
 
+  const { handleStopSpeaking } = useContext(speechSynthesisContext);
+
   const _handleSwitchLanguage = () => {
     handleSwitchLanguage();
     handleSetCompletion();
+    handleStopSpeaking();
+  };
+
+  const _handleChangeFromLanguage = (fromLanguage: string) => {
+    handleChangeFromLanguage(fromLanguage);
+    handleStopSpeaking();
+  };
+
+  const _handleChangeToLanguage = (toLanguage: string) => {
+    handleChangeToLanguage(toLanguage);
+    handleStopSpeaking();
   };
 
   return (
@@ -28,7 +45,7 @@ export const LanguagePicker = () => {
       <Combobox
         options={languages}
         value={fromLanguage}
-        onChange={handleChangeFromLanguage}
+        onChange={_handleChangeFromLanguage}
       />
 
       <Button onClick={_handleSwitchLanguage} variant="ghost" size="sm">
@@ -38,7 +55,7 @@ export const LanguagePicker = () => {
       <Combobox
         options={languages}
         value={toLanguage}
-        onChange={handleChangeToLanguage}
+        onChange={_handleChangeToLanguage}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { LanguagePicker, ToolBelt, TextareaGroup } from "@/components";
 
-export const Translator = () => {
+export const Translate = () => {
   return (
     <main className="container px-3 max-w-[1000px]">
       <Suspense>

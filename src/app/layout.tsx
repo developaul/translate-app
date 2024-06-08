@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { ThemeProvider, TextProvider, LanguageProvider } from "@/providers";
+import {
+  ThemeProvider,
+  TextProvider,
+  LanguageProvider,
+  SpeechSynthesisProvider,
+} from "@/providers";
 import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
@@ -32,7 +37,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <LanguageProvider>
-            <TextProvider>{children}</TextProvider>
+            <TextProvider>
+              <SpeechSynthesisProvider>{children}</SpeechSynthesisProvider>
+            </TextProvider>
           </LanguageProvider>
         </ThemeProvider>
         <Toaster />

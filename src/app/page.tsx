@@ -1,12 +1,12 @@
 import { NextPage } from "next";
 
-import { Header, Translator } from "@/containers";
+import { Header, Translate } from "@/containers";
 
 const HomePage: NextPage = () => {
   return (
     <>
       <Header />
-      <Translator />
+      <Translate />
     </>
   );
 };
