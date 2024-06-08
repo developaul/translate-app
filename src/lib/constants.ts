@@ -32,3 +32,11 @@ export const languages = [
 ];
 
 export const DEBOUNCE_TIME = 300;
+
+export const enum TranslationBoxTypes {
+  SOURCE = "source",
+  TARGET = "target",
+}
+
+export const MIN_TEXT_TO_TRANSLATE_LENGTH = 2;
+export const MAX_TEXT_TO_TRANSLATE_LENGTH = 5000;

@@ -1,8 +1,9 @@
 "use client";
 import { useContext } from "react";
 
-import { Textarea } from "./ui/textarea";
 import { textContext } from "@/providers";
+import { TranslationBox } from "./TranslationBox";
+import { TranslationBoxTypes } from "@/lib/constants";
 
 export const TextareaGroup = () => {
   const { completion, textToTranslate, handleChangeTextToTranslate } =
@@ -10,18 +11,22 @@ export const TextareaGroup = () => {
 
   return (
     <div className="flex flex-col md:flex-row md:gap-14  ">
-      <Textarea
-        onChange={handleChangeTextToTranslate}
-        value={textToTranslate}
-        className="h-[200px] resize-none"
-        placeholder="Type your text here."
+      <TranslationBox
+        textareaProps={{
+          placeholder: "Type your text here.",
+          value: textToTranslate,
+          onChange: handleChangeTextToTranslate,
+        }}
+        type={TranslationBoxTypes.SOURCE}
       />
 
-      <Textarea
-        value={completion}
-        readOnly
-        className="h-[200px] resize-none"
-        placeholder="Translated text here."
+      <TranslationBox
+        textareaProps={{
+          readOnly: true,
+          placeholder: "Translated text here.",
+          value: completion,
+        }}
+        type={TranslationBoxTypes.TARGET}
       />
     </div>
   );
