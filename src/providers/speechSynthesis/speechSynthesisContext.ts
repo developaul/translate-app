@@ -1,10 +1,11 @@
 "use client";
 
 import { createContext } from "react";
+import { HandleStartSpeakingArgs, SpeakingState } from "@/interfaces";
 
 export interface SpeechSynthesisContextArgs {
-  isSpeaking: boolean;
-  handleStartSpeaking: () => void;
+  speakingState: SpeakingState;
+  handleStartSpeaking: (args: HandleStartSpeakingArgs) => void;
   handleStopSpeaking: () => void;
 }
 

@@ -1,39 +1,41 @@
 "use client";
 
-import { FC, PropsWithChildren, useContext, useState } from "react";
+import { FC, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { getVoiceByLanguage } from "@/lib/utils";
 import { speechSynthesisContext } from "./speechSynthesisContext";
-import { languageContext } from "../language";
-import { textContext } from "../text";
+import { HandleStartSpeakingArgs, SpeakingState } from "@/interfaces";
+import { defaultSpeakingState } from "@/lib/constants";
 
 export const SpeechSynthesisProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
-  const { toLanguage } = useContext(languageContext);
-  const { completion } = useContext(textContext);
+  const [speakingState, setSpeakingState] =
+    useState<SpeakingState>(defaultSpeakingState);
 
-  const [isSpeaking, setIsSpeaking] = useState(false);
-
-  const handleStartSpeaking = () => {
+  const handleStartSpeaking = ({
+    text,
+    language,
+    type,
+  }: HandleStartSpeakingArgs) => {
     try {
       const speechSynthesis = window.speechSynthesis;
 
       if (!speechSynthesis)
         throw new Error("SpeechSynthesis is not supported.");
 
-      const voice = getVoiceByLanguage(toLanguage);
+      const voice = getVoiceByLanguage(language);
 
-      const utterance = new SpeechSynthesisUtterance(completion);
+      const utterance = new SpeechSynthesisUtterance(text);
 
       utterance.voice = voice;
 
       utterance.onstart = () => {
-        setIsSpeaking(true);
+        setSpeakingState((prev) => ({ ...prev, type, isSpeaking: true }));
       };
 
       utterance.onend = () => {
-        setIsSpeaking(false);
+        setSpeakingState((prev) => ({ ...prev, isSpeaking: false }));
       };
 
       speechSynthesis.speak(utterance);
@@ -45,6 +47,15 @@ export const SpeechSynthesisProvider: FC<PropsWithChildren> = ({
       });
     }
   };
+
+  // Load speechSynthesis voices on mount
+  useEffect(() => {
+    const speechSynthesis = window.speechSynthesis;
+
+    if (!speechSynthesis) return;
+
+    speechSynthesis.getVoices();
+  }, []);
 
   const handleStopSpeaking = () => {
     try {
@@ -61,14 +72,14 @@ export const SpeechSynthesisProvider: FC<PropsWithChildren> = ({
         description: "There was a problem stopping the speech.",
       });
     } finally {
-      setIsSpeaking(false);
+      setSpeakingState((prev) => ({ ...prev, isSpeaking: false }));
     }
   };
 
   return (
     <speechSynthesisContext.Provider
       value={{
-        isSpeaking,
+        speakingState,
         handleStartSpeaking,
         handleStopSpeaking,
       }}

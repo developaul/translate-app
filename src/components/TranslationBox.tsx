@@ -14,7 +14,7 @@ export const TranslationBox: FC<TranslationBoxProps> = ({
   type,
   textareaProps,
 }) => {
-  const value = textareaProps?.value?.toString() ?? "";
+  const value = textareaProps?.value?.toString().trim() ?? "";
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 

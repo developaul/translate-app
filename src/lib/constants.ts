@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { SpeakingState } from "@/interfaces";
 
 export const enum ToolBeltType {
   TEXT = "text",
@@ -56,3 +56,8 @@ export const enum TranslationBoxTypes {
 
 export const MIN_TEXT_TO_TRANSLATE_LENGTH = 2;
 export const MAX_TEXT_TO_TRANSLATE_LENGTH = 5000;
+
+export const defaultSpeakingState: SpeakingState = {
+  isSpeaking: false,
+  type: TranslationBoxTypes.SOURCE,
+};
