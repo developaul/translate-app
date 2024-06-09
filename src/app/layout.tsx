@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description: "Translate your text easily and quickly in multiple languages",
 };
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export default function RootLayout({
   children,
