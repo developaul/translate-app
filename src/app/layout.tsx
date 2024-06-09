@@ -11,6 +11,7 @@ import {
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { DEFAULT_TOOLTIP_DELAY_DURATION } from "@/lib/constants";
+import { Suspense } from "react";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -39,11 +40,13 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider delayDuration={DEFAULT_TOOLTIP_DELAY_DURATION}>
-            <LanguageProvider>
-              <TextProvider>
-                <SpeechSynthesisProvider>{children}</SpeechSynthesisProvider>
-              </TextProvider>
-            </LanguageProvider>
+            <Suspense>
+              <LanguageProvider>
+                <TextProvider>
+                  <SpeechSynthesisProvider>{children}</SpeechSynthesisProvider>
+                </TextProvider>
+              </LanguageProvider>
+            </Suspense>
           </TooltipProvider>
         </ThemeProvider>
         <Toaster />
