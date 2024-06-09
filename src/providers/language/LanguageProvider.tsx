@@ -1,38 +1,90 @@
 "use client";
 
-import { useState, PropsWithChildren, FC } from "react";
+import { PropsWithChildren, FC, use, useEffect } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { languageContext } from "./languageContext";
-import { DEFAULT_FROM_LANGUAGE, DEFAULT_TO_LANGUAGE } from "@/lib/constants";
+import {
+  DEFAULT_FROM_QUERY_LANGUAGE,
+  DEFAULT_TO_QUERY_LANGUAGE,
+  SearchParams,
+  languageByQueryLanguage,
+  languageByValue,
+} from "@/lib/constants";
 import { getFirstNextLanguage } from "@/lib/utils";
 
+interface SetNewSearchParamsArgs {
+  fromLanguage?: string;
+  toLanguage?: string;
+  text?: string;
+}
+
 export const LanguageProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [fromLanguage, setFromLanguage] = useState(DEFAULT_FROM_LANGUAGE);
-  const [toLanguage, setToLanguage] = useState(DEFAULT_TO_LANGUAGE);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const fromQueryLanguage =
+    searchParams.get(SearchParams.FROM_LANGUAGE) ?? DEFAULT_FROM_QUERY_LANGUAGE;
+
+  const toQueryLanguage =
+    searchParams.get(SearchParams.TO_LANGUAGE) ?? DEFAULT_TO_QUERY_LANGUAGE;
+
+  const fromLanguage = languageByQueryLanguage[fromQueryLanguage].value;
+  const toLanguage = languageByQueryLanguage[toQueryLanguage].value;
+
+  const setNewSearchParams = ({
+    fromLanguage,
+    toLanguage,
+    text,
+  }: SetNewSearchParamsArgs) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+
+    if (toLanguage) {
+      const queryToLanguage = languageByValue[toLanguage].query;
+      newSearchParams.set(SearchParams.TO_LANGUAGE, queryToLanguage);
+    }
+
+    if (fromLanguage) {
+      const queryFromLanguage = languageByValue[fromLanguage].query;
+
+      newSearchParams.set(SearchParams.FROM_LANGUAGE, queryFromLanguage);
+    }
+
+    if (text) {
+      newSearchParams.set(SearchParams.TEXT, text);
+    }
+
+    const queryString = newSearchParams.toString();
+    router.replace(`${pathname}?${queryString}`);
+  };
 
   const handleChangeToLanguage = (toLanguage: string) => {
-    setToLanguage(toLanguage);
-
-    if (toLanguage !== fromLanguage) return;
-
-    const language = getFirstNextLanguage(fromLanguage);
-
-    setFromLanguage(language);
+    setNewSearchParams({
+      toLanguage,
+      fromLanguage:
+        toLanguage === fromLanguage
+          ? getFirstNextLanguage(fromLanguage)
+          : undefined,
+    });
   };
 
   const handleChangeFromLanguage = (fromLanguage: string) => {
-    setFromLanguage(fromLanguage);
-
-    if (fromLanguage !== toLanguage) return;
-
-    const language = getFirstNextLanguage(fromLanguage);
-
-    setToLanguage(language);
+    setNewSearchParams({
+      fromLanguage,
+      toLanguage:
+        fromLanguage === toLanguage
+          ? getFirstNextLanguage(toLanguage)
+          : undefined,
+    });
   };
 
-  const handleSwitchLanguage = () => {
-    setFromLanguage(toLanguage);
-    setToLanguage(fromLanguage);
+  const handleSwitchLanguage = (completion: string) => {
+    setNewSearchParams({
+      fromLanguage: toLanguage,
+      toLanguage: fromLanguage,
+      text: completion,
+    });
   };
 
   return (

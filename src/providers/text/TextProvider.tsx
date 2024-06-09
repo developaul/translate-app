@@ -1,21 +1,27 @@
 "use client";
 
-import { useState, PropsWithChildren, FC, useEffect, useContext } from "react";
+import { PropsWithChildren, FC, useEffect, useContext } from "react";
 import { useCompletion } from "ai/react";
 import { useDebouncedCallback } from "use-debounce";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { textContext } from "./textContext";
 import {
   DEBOUNCE_TIME,
   MAX_TEXT_TO_TRANSLATE_LENGTH,
   MIN_TEXT_TO_TRANSLATE_LENGTH,
+  SearchParams,
 } from "@/lib/constants";
 import { languageContext } from "../language";
 
 export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { fromLanguage, toLanguage } = useContext(languageContext);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const [textToTranslate, setTextToTranslate] = useState("");
+  const textToTranslate = searchParams.get(SearchParams.TEXT) ?? "";
+
+  const { fromLanguage, toLanguage } = useContext(languageContext);
 
   const { completion, complete, setCompletion } = useCompletion({
     api: "/api/translate",
@@ -28,6 +34,19 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
   const handleDebouncedTextChange = useDebouncedCallback((value: string) => {
     complete(value, { body: { fromLanguage, toLanguage } });
   }, DEBOUNCE_TIME);
+
+  const setTextToTranslate = (value: string) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+
+    if (value.trim().length) {
+      newSearchParams.set(SearchParams.TEXT, value);
+    } else {
+      newSearchParams.delete(SearchParams.TEXT);
+    }
+
+    const queryString = newSearchParams.toString();
+    router.replace(`${pathname}?${queryString}`);
+  };
 
   const handleChangeTextToTranslate = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -44,14 +63,11 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
     handleDebouncedTextChange(value);
   };
 
-  const handleSetCompletion = () => {
-    setTextToTranslate(completion);
-  };
-
   useEffect(() => {
     if (textToTranslate.trim().length < MIN_TEXT_TO_TRANSLATE_LENGTH) return;
 
     complete(textToTranslate, { body: { fromLanguage, toLanguage } });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [complete, fromLanguage, toLanguage]);
 
@@ -60,7 +76,6 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
       value={{
         completion,
         textToTranslate,
-        handleSetCompletion,
         handleChangeTextToTranslate,
       }}
     >

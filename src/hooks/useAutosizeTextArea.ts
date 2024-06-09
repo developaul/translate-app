@@ -1,3 +1,4 @@
+"use client";
 import { useEffect } from "react";
 
 // Updates the height of a <textarea> when the value changes.

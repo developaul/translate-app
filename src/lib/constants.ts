@@ -14,28 +14,31 @@ export const validToolBeltTypes = [
   ToolBeltType.WEB_SITE,
 ];
 
-export const DEFAULT_FROM_LANGUAGE = "Spanish";
-export const DEFAULT_TO_LANGUAGE = "English";
+export const DEFAULT_FROM_QUERY_LANGUAGE = "es";
+export const DEFAULT_TO_QUERY_LANGUAGE = "en";
 
 interface Language {
   value: string;
   label: string;
   lang: string;
+  query: string;
 }
 
 export const languages: Language[] = [
-  { value: "Spanish", label: "Spanish", lang: "es-ES" },
-  { value: "English", label: "English", lang: "en-US" },
-  { value: "German", label: "German", lang: "de-DE" },
-  { value: "Arabic", label: "Arabic", lang: "ar-SA" },
-  { value: "Bengali", label: "Bengali", lang: "bn-IN" },
-  { value: "French", label: "French", lang: "fr-FR" },
-  { value: "Hindi", label: "Hindi", lang: "hi-IN" },
-  { value: "Japanese", label: "Japanese", lang: "ja-JP" },
-  { value: "Mandarin", label: "Mandarin", lang: "zh-CN" },
-  { value: "Portuguese", label: "Portuguese", lang: "pt-BR" },
-  { value: "Russian", label: "Russian", lang: "ru-RU" },
+  { value: "Spanish", label: "Spanish", lang: "es-ES", query: "es" },
+  { value: "English", label: "English", lang: "en-US", query: "en" },
+  { value: "German", label: "German", lang: "de-DE", query: "de" },
+  { value: "Arabic", label: "Arabic", lang: "ar-SA", query: "ar" },
+  { value: "Bengali", label: "Bengali", lang: "bn-IN", query: "bn" },
+  { value: "French", label: "French", lang: "fr-FR", query: "fr" },
+  { value: "Hindi", label: "Hindi", lang: "hi-IN", query: "hi" },
+  { value: "Japanese", label: "Japanese", lang: "ja-JP", query: "ja" },
+  { value: "Mandarin", label: "Mandarin", lang: "zh-CN", query: "zh" },
+  { value: "Portuguese", label: "Portuguese", lang: "pt-BR", query: "pt" },
+  { value: "Russian", label: "Russian", lang: "ru-RU", query: "ru" },
 ];
+
+export const querylanguages: string[] = languages.map(({ query }) => query);
 
 export const languageByValue: Record<string, Language> = languages.reduce(
   (acc, language) => ({
@@ -44,6 +47,15 @@ export const languageByValue: Record<string, Language> = languages.reduce(
   }),
   {}
 );
+
+export const languageByQueryLanguage: Record<string, Language> =
+  languages.reduce(
+    (acc, language) => ({
+      ...acc,
+      [language.query]: language,
+    }),
+    {}
+  );
 
 export const DEFAULT_LANG = "en-US";
 
@@ -63,3 +75,10 @@ export const defaultSpeakingState: SpeakingState = {
 };
 
 export const DEFAULT_TOOLTIP_DELAY_DURATION = 600;
+
+export const enum SearchParams {
+  FROM_LANGUAGE = "sl",
+  TO_LANGUAGE = "tl",
+  OPTION = "op",
+  TEXT = "text",
+}

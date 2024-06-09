@@ -1,33 +1,28 @@
 "use client";
 
-import { useEffect } from "react";
 import { TextIcon, ImageIcon, FileIcon } from "@radix-ui/react-icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { ToolBeltType, validToolBeltTypes } from "@/lib/constants";
+import { SearchParams, ToolBeltType } from "@/lib/constants";
 
 export const ToolBelt = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const toolBeltType = searchParams.get("op") as ToolBeltType;
+  const toolBeltType =
+    (searchParams.get(SearchParams.OPTION) as ToolBeltType) ??
+    ToolBeltType.TEXT;
 
   const handleChange = (toolBeltType: ToolBeltType) => () => {
     const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set("op", toolBeltType);
+    newSearchParams.set(SearchParams.OPTION, toolBeltType);
 
     const queryString = newSearchParams.toString();
 
     router.replace(`${pathname}?${queryString}`);
   };
-
-  useEffect(() => {
-    if (validToolBeltTypes.includes(toolBeltType)) return;
-    handleChange(ToolBeltType.TEXT)();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <nav className="mb-4">

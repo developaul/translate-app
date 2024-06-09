@@ -7,7 +7,7 @@ export interface LanguageContextArgs {
   toLanguage: string;
   handleChangeFromLanguage: (fromLanguage: string) => void;
   handleChangeToLanguage: (toLanguage: string) => void;
-  handleSwitchLanguage: () => void;
+  handleSwitchLanguage: (completion: string) => void;
 }
 
 export const languageContext = createContext({} as LanguageContextArgs);
