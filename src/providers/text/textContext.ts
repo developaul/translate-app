@@ -8,6 +8,7 @@ interface TextContextArgs {
   handleChangeTextToTranslate: (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
+  handleSetTextToTranslate: (value: string) => void;
 }
 
 export const textContext = createContext<TextContextArgs>(

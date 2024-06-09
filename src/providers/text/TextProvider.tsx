@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren, FC, useEffect, useContext } from "react";
+import { PropsWithChildren, FC, useEffect, useContext, useState } from "react";
 import { useCompletion } from "ai/react";
 import { useDebouncedCallback } from "use-debounce";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -21,6 +21,9 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const textToTranslate = searchParams.get(SearchParams.TEXT) ?? "";
 
+  const [textToTranslateState, setTextToTranslateState] =
+    useState(textToTranslate);
+
   const { fromLanguage, toLanguage } = useContext(languageContext);
 
   const { completion, complete, setCompletion } = useCompletion({
@@ -36,6 +39,8 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
   }, DEBOUNCE_TIME);
 
   const setTextToTranslate = (value: string) => {
+    setTextToTranslateState(value);
+
     const newSearchParams = new URLSearchParams(searchParams);
 
     if (value.trim().length) {
@@ -46,6 +51,10 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const queryString = newSearchParams.toString();
     router.replace(`${pathname}?${queryString}`);
+  };
+
+  const handleSetTextToTranslate = (value: string) => {
+    setTextToTranslateState(value);
   };
 
   const handleChangeTextToTranslate = (
@@ -64,9 +73,10 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   useEffect(() => {
-    if (textToTranslate.trim().length < MIN_TEXT_TO_TRANSLATE_LENGTH) return;
+    if (textToTranslateState.trim().length < MIN_TEXT_TO_TRANSLATE_LENGTH)
+      return;
 
-    complete(textToTranslate, { body: { fromLanguage, toLanguage } });
+    complete(textToTranslateState, { body: { fromLanguage, toLanguage } });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [complete, fromLanguage, toLanguage]);
@@ -75,8 +85,9 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
     <textContext.Provider
       value={{
         completion,
-        textToTranslate,
+        textToTranslate: textToTranslateState,
         handleChangeTextToTranslate,
+        handleSetTextToTranslate,
       }}
     >
       {children}

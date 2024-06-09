@@ -21,12 +21,13 @@ export const LanguagePicker = () => {
     handleSwitchLanguage,
   } = useContext(languageContext);
 
-  const { completion } = useContext(textContext);
+  const { handleSetTextToTranslate, completion } = useContext(textContext);
 
   const { handleStopSpeaking } = useContext(speechSynthesisContext);
 
   const _handleSwitchLanguage = () => {
     handleSwitchLanguage(completion);
+    handleSetTextToTranslate(completion);
     handleStopSpeaking();
   };
 
