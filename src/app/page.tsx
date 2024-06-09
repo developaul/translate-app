@@ -4,6 +4,8 @@ import { NextPage } from "next";
 import { Header, Translate } from "@/containers";
 import { useSetSearchParams } from "@/hooks";
 
+export const dynamic = "force-dynamic";
+
 const HomePage: NextPage = () => {
   useSetSearchParams();
 
