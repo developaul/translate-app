@@ -29,6 +29,7 @@
 - [**Nextjs**](https://nextjs.org/) - The React Framework for the Web.
 - [**Typescript**](https://www.typescriptlang.org/) - JavaScript with syntax for types.
 - [**TailwindCSS**](https://tailwindcss.com) + [**shadcn/ui**](https://ui.shadcn.com) & [**Radix Primitives**](https://www.radix-ui.com) - Design System.
+- [**use-debounce**](https://github.com/xnimorz/use-debounce) - A React hook for debouncing events.
 - [**Zod**](https://zod.dev/) - Schema declaration and validation library.
 - [**Bun**](https://bun.sh/) - A fast JavaScript runtime like Node.js.
 - [**ai**](https://sdk.vercel.ai/docs/introduction) - AI framework for TypeScript.
