@@ -2,6 +2,7 @@ import { FC, useContext } from "react";
 import {
   CopyIcon,
   EnvelopeClosedIcon,
+  Link1Icon,
   Share1Icon,
   SpeakerLoudIcon,
   StopIcon,
@@ -33,7 +34,7 @@ export const TranslationTargetActions: FC<TranslationTargetActionsProps> = ({
     speakingState.type == TranslationBoxTypes.TARGET &&
     speakingState.isSpeaking;
 
-  const handleCopyToClipboard = async () => {
+  const handleCopyTranslatedText = async () => {
     try {
       await navigator.clipboard.writeText(value);
       toast({
@@ -44,6 +45,21 @@ export const TranslationTargetActions: FC<TranslationTargetActionsProps> = ({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description: "There was a problem copying the text.",
+      });
+    }
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      toast({
+        title: "📋 Link copied to clipboard",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem copying the link.",
       });
     }
   };
@@ -85,7 +101,11 @@ export const TranslationTargetActions: FC<TranslationTargetActionsProps> = ({
       <div className="flex items-center gap-2">
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button onClick={handleCopyToClipboard} variant="ghost" size="icon">
+            <Button
+              onClick={handleCopyTranslatedText}
+              variant="ghost"
+              size="icon"
+            >
               <CopyIcon />
             </Button>
           </TooltipTrigger>
@@ -115,6 +135,7 @@ export const TranslationTargetActions: FC<TranslationTargetActionsProps> = ({
                   <EnvelopeClosedIcon />
                 </Button>
               </a>
+
               <a
                 rel="noreferrer"
                 href={`https://twitter.com/intent/tweet?text=${value}`}
@@ -124,6 +145,10 @@ export const TranslationTargetActions: FC<TranslationTargetActionsProps> = ({
                   <TwitterLogoIcon />
                 </Button>
               </a>
+
+              <Button onClick={handleCopyLink} variant="ghost" size="icon">
+                <Link1Icon />
+              </Button>
             </div>
           </PopoverContent>
         </Popover>
