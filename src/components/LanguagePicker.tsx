@@ -4,11 +4,12 @@ import { WidthIcon } from "@radix-ui/react-icons";
 
 import { Button } from "./ui/button";
 import { Combobox } from "./ui/combobox";
-import { languages } from "@/lib/constants";
+import { ToolBeltType, languages } from "@/lib/constants";
 import {
   languageContext,
   speechSynthesisContext,
   textContext,
+  toolBeltContext,
 } from "@/providers";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
@@ -23,12 +24,16 @@ export const LanguagePicker = () => {
 
   const { handleSetTextToTranslate, completion } = useContext(textContext);
 
+  const { toolBeltType } = useContext(toolBeltContext);
+
   const { handleStopSpeaking } = useContext(speechSynthesisContext);
 
   const _handleSwitchLanguage = () => {
     handleSwitchLanguage(completion);
-    handleSetTextToTranslate(completion);
     handleStopSpeaking();
+
+    if (toolBeltType === ToolBeltType.TEXT)
+      handleSetTextToTranslate(completion);
   };
 
   const _handleChangeFromLanguage = (fromLanguage: string) => {

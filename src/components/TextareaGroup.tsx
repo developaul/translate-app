@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from "react";
+import { ChangeEvent, useContext } from "react";
 
 import { textContext } from "@/providers";
 import { TranslationBox } from "./TranslationBox";
@@ -9,13 +9,19 @@ export const TextareaGroup = () => {
   const { completion, textToTranslate, handleChangeTextToTranslate } =
     useContext(textContext);
 
+  const _handleChangeTextToTranslate = ({
+    target,
+  }: ChangeEvent<HTMLTextAreaElement>) => {
+    handleChangeTextToTranslate(target.value);
+  };
+
   return (
     <div className="flex flex-col md:flex-row md:gap-14  ">
       <TranslationBox
         textareaProps={{
           placeholder: "Type your text here.",
           value: textToTranslate,
-          onChange: handleChangeTextToTranslate,
+          onChange: _handleChangeTextToTranslate,
         }}
         type={TranslationBoxTypes.SOURCE}
       />

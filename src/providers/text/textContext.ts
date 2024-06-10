@@ -5,9 +5,7 @@ import { createContext } from "react";
 interface TextContextArgs {
   completion: string;
   textToTranslate: string;
-  handleChangeTextToTranslate: (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => void;
+  handleChangeTextToTranslate: (textToTranslate: string) => void;
   handleSetTextToTranslate: (value: string) => void;
 }
 

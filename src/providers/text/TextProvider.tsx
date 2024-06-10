@@ -57,19 +57,15 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
     setTextToTranslateState(value);
   };
 
-  const handleChangeTextToTranslate = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const { value } = event.target;
+  const handleChangeTextToTranslate = (textToTranslate: string) => {
+    if (textToTranslate.trim().length > MAX_TEXT_TO_TRANSLATE_LENGTH) return;
 
-    if (value.trim().length > MAX_TEXT_TO_TRANSLATE_LENGTH) return;
+    setTextToTranslate(textToTranslate);
 
-    setTextToTranslate(value);
-
-    if (value.trim().length < MIN_TEXT_TO_TRANSLATE_LENGTH)
+    if (textToTranslate.trim().length < MIN_TEXT_TO_TRANSLATE_LENGTH)
       return setCompletion("");
 
-    handleDebouncedTextChange(value);
+    handleDebouncedTextChange(textToTranslate);
   };
 
   useEffect(() => {
