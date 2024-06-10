@@ -19,6 +19,7 @@ export const TranslationDropzoneBox = () => {
     <div className="flex flex-col items-center justify-center gap-2 w-full rounded-md border border-input bg-transparent px-3 py-4 text-sm shadow-sm">
       {image ? (
         <Image
+          priority
           className="w-full h-full object-cover max-w-[150px] max-h-[150px]"
           src={image}
           alt="preview image"
