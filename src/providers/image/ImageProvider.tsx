@@ -12,12 +12,17 @@ export const ImageProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const { fromLanguage, toLanguage } = useContext(languageContext);
 
-  const { completion, complete, isLoading } = useCompletion({
+  const { completion, complete, isLoading, setCompletion } = useCompletion({
     api: "/api/translate-image",
   });
 
-  const handleImageChange = (file: File) => {
+  const handleImageChange = (file: File | null) => {
     setFile(file);
+  };
+
+  const handleRemoveImage = () => {
+    setFile(null);
+    setCompletion("");
   };
 
   useEffect(() => {
@@ -34,6 +39,7 @@ export const ImageProvider: FC<PropsWithChildren> = ({ children }) => {
     <imageContext.Provider
       value={{
         handleImageChange,
+        handleRemoveImage,
         completion,
         isLoading,
         file,

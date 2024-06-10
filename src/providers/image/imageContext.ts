@@ -3,7 +3,8 @@
 import { createContext } from "react";
 
 export interface ImageContextArgs {
-  handleImageChange: (file: File) => void;
+  handleImageChange: (file: File | null) => void;
+  handleRemoveImage: () => void;
   completion: string;
   isLoading: boolean;
   file: File | null;
