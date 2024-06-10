@@ -1,35 +1,22 @@
 "use client";
 
+import { useContext } from "react";
 import { TextIcon, ImageIcon, FileIcon } from "@radix-ui/react-icons";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { SearchParams, ToolBeltType } from "@/lib/constants";
+import { ToolBeltType } from "@/lib/constants";
+import { toolBeltContext } from "@/providers";
 
 export const ToolBelt = () => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const toolBeltType =
-    (searchParams.get(SearchParams.OPTION) as ToolBeltType) ??
-    ToolBeltType.TEXT;
-
-  const handleChange = (toolBeltType: ToolBeltType) => () => {
-    const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set(SearchParams.OPTION, toolBeltType);
-
-    const queryString = newSearchParams.toString();
-
-    router.replace(`${pathname}?${queryString}`);
-  };
+  const { toolBeltType, handleChangeToolBeltType } =
+    useContext(toolBeltContext);
 
   return (
     <nav className="mb-4">
       <ul className="flex items-center gap-2">
         <li>
           <Button
-            onClick={handleChange(ToolBeltType.TEXT)}
+            onClick={handleChangeToolBeltType(ToolBeltType.TEXT)}
             variant={toolBeltType === ToolBeltType.TEXT ? "default" : "ghost"}
             size={"sm"}
           >
@@ -39,8 +26,7 @@ export const ToolBelt = () => {
         </li>
         <li>
           <Button
-            disabled
-            onClick={handleChange(ToolBeltType.IMAGE)}
+            onClick={handleChangeToolBeltType(ToolBeltType.IMAGE)}
             variant={toolBeltType === ToolBeltType.IMAGE ? "default" : "ghost"}
             size={"sm"}
           >
@@ -51,7 +37,7 @@ export const ToolBelt = () => {
         <li>
           <Button
             disabled
-            onClick={handleChange(ToolBeltType.DOCUMENT)}
+            onClick={handleChangeToolBeltType(ToolBeltType.DOCUMENT)}
             variant={
               toolBeltType === ToolBeltType.DOCUMENT ? "default" : "ghost"
             }

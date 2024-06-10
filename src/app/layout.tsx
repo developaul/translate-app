@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
@@ -7,11 +8,12 @@ import {
   TextProvider,
   LanguageProvider,
   SpeechSynthesisProvider,
+  ToolBeltProvider,
+  ImageProvider,
 } from "@/providers";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { DEFAULT_TOOLTIP_DELAY_DURATION } from "@/lib/constants";
-import { Suspense } from "react";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -41,11 +43,17 @@ export default function RootLayout({
         >
           <TooltipProvider delayDuration={DEFAULT_TOOLTIP_DELAY_DURATION}>
             <Suspense>
-              <LanguageProvider>
-                <TextProvider>
-                  <SpeechSynthesisProvider>{children}</SpeechSynthesisProvider>
-                </TextProvider>
-              </LanguageProvider>
+              <ToolBeltProvider>
+                <LanguageProvider>
+                  <TextProvider>
+                    <ImageProvider>
+                      <SpeechSynthesisProvider>
+                        {children}
+                      </SpeechSynthesisProvider>
+                    </ImageProvider>
+                  </TextProvider>
+                </LanguageProvider>
+              </ToolBeltProvider>
             </Suspense>
           </TooltipProvider>
         </ThemeProvider>
