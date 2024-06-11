@@ -6,7 +6,12 @@ import {
   MAX_TEXT_TO_TRANSLATE_LENGTH,
   TranslationBoxTypes,
 } from "@/lib/constants";
-import { languageContext, speechSynthesisContext } from "@/providers";
+import {
+  languageContext,
+  speechRecognitionContext,
+  speechSynthesisContext,
+} from "@/providers";
+import { Microphone } from "@/icons";
 
 interface TranslationSourceActionsProps {
   value: string;
@@ -19,6 +24,10 @@ export const TranslationSourceActions: FC<TranslationSourceActionsProps> = ({
 
   const { speakingState, handleStartSpeaking, handleStopSpeaking } = useContext(
     speechSynthesisContext
+  );
+
+  const { isRecording, handleStartRecording, handleStopRecording } = useContext(
+    speechRecognitionContext
   );
 
   const isSourceSpeaking =
@@ -36,27 +45,61 @@ export const TranslationSourceActions: FC<TranslationSourceActionsProps> = ({
   return (
     <footer className="flex items-center justify-between">
       <div className="flex items-center gap-2">
-        {value.length > 0 && (
+        {!isRecording && (
           <Tooltip>
             <TooltipTrigger asChild>
-              {isSourceSpeaking ? (
-                <Button
-                  onClick={handleStopSpeaking}
-                  variant="ghost"
-                  size="icon"
-                >
-                  <StopIcon />
-                </Button>
-              ) : (
-                <Button
-                  disabled={speakingState.isSpeaking}
-                  onClick={_handleStartSpeaking}
-                  variant="ghost"
-                  size="icon"
-                >
-                  <SpeakerLoudIcon />
-                </Button>
-              )}
+              <Button
+                disabled={speakingState.isSpeaking}
+                onClick={handleStartRecording}
+                variant="ghost"
+                size="icon"
+              >
+                <Microphone />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>Translate by voice</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
+
+        {isRecording && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={handleStopRecording} variant="ghost" size="icon">
+                <StopIcon />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>stop voice translation</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
+
+        {value.length > 0 && isSourceSpeaking && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button onClick={handleStopSpeaking} variant="ghost" size="icon">
+                <StopIcon />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>Stop</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
+
+        {value.length > 0 && !isSourceSpeaking && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                disabled={speakingState.isSpeaking || isRecording}
+                onClick={_handleStartSpeaking}
+                variant="ghost"
+                size="icon"
+              >
+                <SpeakerLoudIcon />
+              </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">
               <p>Listen</p>

@@ -10,6 +10,7 @@ import {
   SpeechSynthesisProvider,
   ToolBeltProvider,
   ImageProvider,
+  SpeechRecognitionProvider,
 } from "@/providers";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -48,7 +49,9 @@ export default function RootLayout({
                   <TextProvider>
                     <ImageProvider>
                       <SpeechSynthesisProvider>
-                        {children}
+                        <SpeechRecognitionProvider>
+                          {children}
+                        </SpeechRecognitionProvider>
                       </SpeechSynthesisProvider>
                     </ImageProvider>
                   </TextProvider>
