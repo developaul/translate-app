@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -51,6 +52,7 @@ export default function RootLayout({
                       <SpeechSynthesisProvider>
                         <SpeechRecognitionProvider>
                           {children}
+                          <Analytics />
                         </SpeechRecognitionProvider>
                       </SpeechSynthesisProvider>
                     </ImageProvider>
