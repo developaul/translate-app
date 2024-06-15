@@ -31,9 +31,13 @@
 - [**TailwindCSS**](https://tailwindcss.com) + [**shadcn/ui**](https://ui.shadcn.com) & [**Radix Primitives**](https://www.radix-ui.com) - Design System.
 - [**use-debounce**](https://github.com/xnimorz/use-debounce) - A React hook for debouncing events.
 - [**Zod**](https://zod.dev/) - Schema declaration and validation library.
-- [**Bun**](https://bun.sh/) - A fast JavaScript runtime like Node.js.
+- [**Bun**](https://bun.sh/) - A fast JavaScript runtime, package manager and bundler.
 - [**ai**](https://sdk.vercel.ai/docs/introduction) - AI framework for TypeScript.
 - [**Vercel**](https://vercel.com/) - Deploy your app anywhere.
+- [**Vercek KV**](https://vercel.com/storage/kv) - Key-value store for Vercel.
+- [**Vercel Analytics**](https://vercel.com/analytics) - Analytics for Vercel.
+- [**Upstash Rate Limit**](https://github.com/upstash/ratelimit) - Rate limiter for Vercel.
+- [**Day.js**](https://day.js.org/) - Date and time library for JavaScript.
 
 ## 🚀 Getting Started
 
@@ -63,13 +67,24 @@ bun install
 > 🚧 The environment variables must match the following schema
 
 ```bash
-# OpenAI Provider =>
+# OpenAI Provider
 OPENAI_API_KEY=
+
+# Vercel KV Store
+KV_URL=
+KV_REST_API_URL=
+KV_REST_API_TOKEN=
+KV_REST_API_READ_ONLY_TOKEN=
 ```
 
 **OpenAI API Key**
 
 - [Get your OpenAI API key](https://platform.openai.com/account/api-keys).
+
+**Vercel KV Store**
+
+- [Get your Vercel KV Store](https://vercel.com/docs/storage/vercel-kv/quickstart).
+
 
 4. Run the development server:
 

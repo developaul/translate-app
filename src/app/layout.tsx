@@ -12,6 +12,7 @@ import {
   ToolBeltProvider,
   ImageProvider,
   SpeechRecognitionProvider,
+  ErrorProvider,
 } from "@/providers";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -44,22 +45,24 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider delayDuration={DEFAULT_TOOLTIP_DELAY_DURATION}>
-            <Suspense>
-              <ToolBeltProvider>
-                <LanguageProvider>
-                  <TextProvider>
-                    <ImageProvider>
-                      <SpeechSynthesisProvider>
-                        <SpeechRecognitionProvider>
-                          {children}
-                          <Analytics />
-                        </SpeechRecognitionProvider>
-                      </SpeechSynthesisProvider>
-                    </ImageProvider>
-                  </TextProvider>
-                </LanguageProvider>
-              </ToolBeltProvider>
-            </Suspense>
+            <ErrorProvider>
+              <Suspense>
+                <ToolBeltProvider>
+                  <LanguageProvider>
+                    <TextProvider>
+                      <ImageProvider>
+                        <SpeechSynthesisProvider>
+                          <SpeechRecognitionProvider>
+                            {children}
+                            <Analytics />
+                          </SpeechRecognitionProvider>
+                        </SpeechSynthesisProvider>
+                      </ImageProvider>
+                    </TextProvider>
+                  </LanguageProvider>
+                </ToolBeltProvider>
+              </Suspense>
+            </ErrorProvider>
           </TooltipProvider>
         </ThemeProvider>
         <Toaster />
