@@ -13,6 +13,7 @@ import {
   SearchParams,
 } from "@/lib/constants";
 import { languageContext } from "../language";
+import { errorContext } from "../error";
 
 export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
@@ -24,9 +25,11 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [textToTranslateState, setTextToTranslateState] =
     useState(textToTranslate);
 
+  const { handleShowRateLimitError } = useContext(errorContext);
+
   const { fromLanguage, toLanguage } = useContext(languageContext);
 
-  const { completion, complete, setCompletion } = useCompletion({
+  const { completion, complete, setCompletion, error } = useCompletion({
     api: "/api/translate",
     body: {
       fromLanguage,
@@ -76,6 +79,14 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [complete, fromLanguage, toLanguage]);
+
+  useEffect(() => {
+    if (!error) return;
+
+    handleShowRateLimitError(error.message);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
 
   return (
     <textContext.Provider
