@@ -25,6 +25,8 @@ export const Dropzone: FC<DropzoneProps> = ({ onDrop }) => {
         <Image
           src={"/drag_and_drop.png"}
           alt="drag and drop"
+          priority
+          className="max-w-[150px] max-h-[150px]"
           width={150}
           height={150}
         />
