@@ -23,7 +23,11 @@ const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Translate App",
-  description: "Translate your text easily and quickly in multiple languages",
+  description:
+    "Translate your text, images, and documents in multiple languages",
+  keywords:
+    "translate, translator, translation, text, image, document, pdf, ai, openai, gpt, chatgpt, vercel, nextjs, tailwindcss, shadcn, radix, react, typescript, bun, kv, ratelimit, dayjs, pdf2json",
+  metadataBase: new URL("https://talk-translate.vercel.app"),
 };
 
 export default function RootLayout({
