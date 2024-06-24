@@ -4,7 +4,7 @@
 
 <div align="center">
   <a href="https://talk-translate.vercel.app" target="_blank">
-    <img src="https://github.com/developaul/translate-app/assets/59939843/651f48c9-8db2-4395-909b-4b7f25e60599" alt="Translate App" >
+    <img src="https://github.com/developaul/translate-app/assets/59939843/15e601e1-1012-45f1-93e9-78acc5500193" alt="Translate App" >
   </a>
 </div>
 
@@ -38,6 +38,15 @@
 - [**Vercel Analytics**](https://vercel.com/analytics) - Analytics for Vercel.
 - [**Upstash Rate Limit**](https://github.com/upstash/ratelimit) - Rate limiter for Vercel.
 - [**Day.js**](https://day.js.org/) - Date and time library for JavaScript.
+- [**pdf2json**](https://github.com/modesty/pdf2json) - Convert PDF to JSON.
+
+<!-- Help me to describe features of this project -->
+
+## 📝 Features
+
+- 📄 Translate text.
+- 📷 Translate images.
+- 📕 Translate documents (PDFs).
 
 ## 🚀 Getting Started
 
@@ -84,7 +93,6 @@ KV_REST_API_READ_ONLY_TOKEN=
 **Vercel KV Store**
 
 - [Get your Vercel KV Store](https://vercel.com/docs/storage/vercel-kv/quickstart).
-
 
 4. Run the development server:
 
