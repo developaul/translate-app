@@ -13,6 +13,7 @@ import {
   ImageProvider,
   SpeechRecognitionProvider,
   ErrorProvider,
+  DocumentProvider,
 } from "@/providers";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -51,12 +52,14 @@ export default function RootLayout({
                   <LanguageProvider>
                     <TextProvider>
                       <ImageProvider>
-                        <SpeechSynthesisProvider>
-                          <SpeechRecognitionProvider>
-                            {children}
-                            <Analytics />
-                          </SpeechRecognitionProvider>
-                        </SpeechSynthesisProvider>
+                        <DocumentProvider>
+                          <SpeechSynthesisProvider>
+                            <SpeechRecognitionProvider>
+                              {children}
+                              <Analytics />
+                            </SpeechRecognitionProvider>
+                          </SpeechSynthesisProvider>
+                        </DocumentProvider>
                       </ImageProvider>
                     </TextProvider>
                   </LanguageProvider>

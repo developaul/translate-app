@@ -1,14 +1,16 @@
 import Image from "next/image";
 import React, { FC } from "react";
-import { useDropzone } from "react-dropzone";
+import { Accept, useDropzone } from "react-dropzone";
 
 interface DropzoneProps {
   onDrop: (acceptedFiles: File[]) => void;
+  title: string;
+  accept?: Accept;
 }
 
-export const Dropzone: FC<DropzoneProps> = ({ onDrop }) => {
+export const Dropzone: FC<DropzoneProps> = ({ title, accept, onDrop }) => {
   const { getRootProps, getInputProps } = useDropzone({
-    accept: { "image/*": [] },
+    accept,
     maxFiles: 1,
     onDrop,
   });
@@ -30,9 +32,7 @@ export const Dropzone: FC<DropzoneProps> = ({ onDrop }) => {
           width={150}
           height={150}
         />
-        <p className="text-center">
-          Drag and drop an image here, or click to select an image
-        </p>
+        <p className="text-center">{title}</p>
       </div>
     </section>
   );

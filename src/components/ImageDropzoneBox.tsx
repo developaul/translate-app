@@ -6,7 +6,7 @@ import { Dropzone } from "./Dropzone";
 import { imageContext } from "@/providers";
 import { Button } from "./ui/button";
 
-export const TranslationDropzoneBox = () => {
+export const ImageDropzoneBox = () => {
   const { file, handleImageChange, handleRemoveImage } =
     useContext(imageContext);
 
@@ -19,7 +19,7 @@ export const TranslationDropzoneBox = () => {
   const image = file != null ? URL.createObjectURL(file) : null;
 
   return (
-    <div className="flex items-center justify-center gap-2 w-full relative rounded-md border border-input bg-transparent px-3 py-4 text-sm shadow-sm">
+    <div className="max-h-40 flex items-center justify-center gap-2 w-full relative rounded-md border border-input bg-transparent px-3 py-4 text-sm shadow-sm ">
       {image ? (
         <>
           <Image
@@ -40,7 +40,11 @@ export const TranslationDropzoneBox = () => {
           </Button>
         </>
       ) : (
-        <Dropzone onDrop={onDrop} />
+        <Dropzone
+          title="Drag and drop an image here, or click to select an image"
+          accept={{ "image/*": [] }}
+          onDrop={onDrop}
+        />
       )}
     </div>
   );

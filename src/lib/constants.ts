@@ -83,5 +83,11 @@ export const enum SearchParams {
   TEXT = "text",
 }
 
-export const RATE_LIMIT_REQUESTS = 50;
+export const RATE_LIMIT_REQUESTS = 10;
 export const RATE_LIMIT_TIME = "1d";
+
+export const RATE_LIMIT_REQUESTS_IMAGE = 3;
+export const RATE_LIMIT_TIME_IMAGE = "1d";
+
+export const RATE_LIMIT_REQUESTS_DOCUMENT = 1;
+export const RATE_LIMIT_TIME_DOCUMENT = "1d";

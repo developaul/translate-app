@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import { TranslationBoxTypes } from "@/lib/constants";
-import { imageContext } from "@/providers";
+import { DocumentDropzoneBox } from "./DocumentDropzoneBox";
 import { TranslationBox } from "./TranslationBox";
-import { TranslationDropzoneBox } from "./TranslationDropzoneBox";
+import { documentContext } from "@/providers";
 
-export const DropzoneGroup = () => {
-  const { completion } = useContext(imageContext);
+export const DocumentGroup = () => {
+  const { completion } = useContext(documentContext);
 
   return (
     <div className="flex flex-col md:flex-row md:gap-14">
-      <TranslationDropzoneBox />
+      <DocumentDropzoneBox />
 
       <TranslationBox
         textareaProps={{

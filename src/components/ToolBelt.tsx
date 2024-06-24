@@ -36,7 +36,6 @@ export const ToolBelt = () => {
         </li>
         <li>
           <Button
-            disabled
             onClick={handleChangeToolBeltType(ToolBeltType.DOCUMENT)}
             variant={
               toolBeltType === ToolBeltType.DOCUMENT ? "default" : "ghost"

@@ -57,6 +57,23 @@ export function base64ToUint8Array(dataURI: string) {
   return array;
 }
 
+export function dataURLtoFile(
+  dataurl: string,
+  filename: string = "default-name"
+) {
+  let arr = dataurl.split(","),
+    mime = arr[0].match(/:(.*?);/)![1],
+    bstr = atob(arr[arr.length - 1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+
+  return new File([u8arr], filename, { type: mime });
+}
+
 export function convertUint8ArrayToBase64(array: any) {
   let latin1string = "";
   for (let i = 0; i < array.length; i++) {
@@ -64,3 +81,25 @@ export function convertUint8ArrayToBase64(array: any) {
   }
   return globalThis.btoa(latin1string);
 }
+
+export const formatBytes = (bytes: number, decimals = 2) => {
+  if (!+bytes) return "0 Bytes";
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = [
+    "Bytes",
+    "KiB",
+    "MiB",
+    "GiB",
+    "TiB",
+    "PiB",
+    "EiB",
+    "ZiB",
+    "YiB",
+  ];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+};

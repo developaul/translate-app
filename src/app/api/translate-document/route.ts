@@ -1,22 +1,32 @@
 import { z } from "zod";
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
-import { base64ToUint8Array } from "@/lib/utils";
-import { kv } from "@vercel/kv";
+import PDFParser, { Output } from "pdf2json";
 import { Ratelimit } from "@upstash/ratelimit";
+import { kv } from "@vercel/kv";
 
 import {
-  RATE_LIMIT_REQUESTS_IMAGE,
-  RATE_LIMIT_TIME_IMAGE,
+  RATE_LIMIT_REQUESTS_DOCUMENT,
+  RATE_LIMIT_TIME_DOCUMENT,
 } from "@/lib/constants";
+import { dataURLtoFile } from "@/lib/utils";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
+const pdfParser = new PDFParser();
+
+const waitForPdfData = (): Promise<Output> => {
+  return new Promise((resolve, reject) => {
+    pdfParser.on("pdfParser_dataError", reject);
+    pdfParser.on("pdfParser_dataReady", resolve);
+  });
+};
+
 const RequestSchema = z.object({
   fromLanguage: z.string(),
   toLanguage: z.string(),
-  image: z.string(),
+  document: z.string(),
 });
 
 export async function POST(req: Request) {
@@ -25,8 +35,8 @@ export async function POST(req: Request) {
   const ratelimit = new Ratelimit({
     redis: kv,
     limiter: Ratelimit.slidingWindow(
-      RATE_LIMIT_REQUESTS_IMAGE,
-      RATE_LIMIT_TIME_IMAGE
+      RATE_LIMIT_REQUESTS_DOCUMENT,
+      RATE_LIMIT_TIME_DOCUMENT
     ),
   });
 
@@ -50,7 +60,6 @@ export async function POST(req: Request) {
 
   // Validate the request body
   const body = await req.json();
-
   const { success: successSchema, data, error } = RequestSchema.safeParse(body);
 
   if (!successSchema) {
@@ -65,26 +74,26 @@ export async function POST(req: Request) {
   }
 
   // Controller for the translation
+  const { fromLanguage, toLanguage, document } = data;
+
+  const file = dataURLtoFile(document);
+  const fileArrayBuffer = await file.arrayBuffer();
+  pdfParser.parseBuffer(fileArrayBuffer as Buffer, 9);
+
+  const pdfData = await waitForPdfData();
+
+  const textToTranslate = pdfData.Pages.map((page) => {
+    return page.Texts.map((text) => {
+      return text.R.map(({ T }) => decodeURIComponent(T).trim()).join("");
+    }).join("");
+  });
+
   const model = openai("gpt-4o");
-
-  const { fromLanguage, toLanguage, image } = data;
-
-  const formattedImage = base64ToUint8Array(image);
 
   const result = await streamText({
     model,
-    messages: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "text",
-            text: `Translate the following text from ${fromLanguage} to ${toLanguage}. If "Auto" is the from language, then try to detect the original language automatically after reading the text from the image. If no text is detected in the image, return an empty string. Always return directly the translated text. Do not include the prompt in the response.`,
-          },
-          { type: "image", image: formattedImage },
-        ],
-      },
-    ],
+    system: `Translate the following text from ${fromLanguage} to ${toLanguage}. If "Auto" is the from language, then try to detect the original language automatically after reading the text. Return directly the translated text. Do not include the prompt in the response.`,
+    prompt: textToTranslate.toString(),
     maxTokens: 4096,
     temperature: 0.7,
   });
