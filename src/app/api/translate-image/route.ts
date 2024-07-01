@@ -35,7 +35,7 @@ export async function POST(req: Request) {
     limit,
     reset,
     remaining,
-  } = await ratelimit.limit(`ratelimit_${ip}`);
+  } = await ratelimit.limit(`ratelimit_image_${ip}`);
 
   if (!successRateLimit) {
     return Response.json(
