@@ -7,3 +7,4 @@ export * from "./image";
 export * from "./speechRecognition";
 export * from "./error";
 export * from "./document";
+export * from "./setup";

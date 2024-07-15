@@ -1,15 +1,18 @@
 "use client";
 
 import { useContext } from "react";
-import { TextIcon, ImageIcon, FileIcon } from "@radix-ui/react-icons";
+import { TextIcon, ImageIcon, FileIcon, GearIcon } from "@radix-ui/react-icons";
 
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { setupContext, toolBeltContext } from "@/providers";
 import { Button } from "@/components/ui/button";
 import { ToolBeltType } from "@/lib/constants";
-import { toolBeltContext } from "@/providers";
 
 export const ToolBelt = () => {
   const { toolBeltType, handleChangeToolBeltType } =
     useContext(toolBeltContext);
+
+  const { handleOpenSetupDialog } = useContext(setupContext);
 
   return (
     <nav className="mb-4">
@@ -45,6 +48,22 @@ export const ToolBelt = () => {
             <FileIcon className="h-4 w-4 mr-2" />
             Documents
           </Button>
+        </li>
+        <li>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={handleOpenSetupDialog}
+                variant="outline"
+                size={"icon"}
+              >
+                <GearIcon className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>Configure Api Key</p>
+            </TooltipContent>
+          </Tooltip>
         </li>
       </ul>
     </nav>

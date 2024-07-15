@@ -18,6 +18,7 @@ import {
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { DEFAULT_TOOLTIP_DELAY_DURATION } from "@/lib/constants";
+import { SetupProvider } from "@/providers/setup";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -59,7 +60,7 @@ export default function RootLayout({
                         <DocumentProvider>
                           <SpeechSynthesisProvider>
                             <SpeechRecognitionProvider>
-                              {children}
+                              <SetupProvider>{children}</SetupProvider>
                               <Analytics />
                             </SpeechRecognitionProvider>
                           </SpeechSynthesisProvider>
