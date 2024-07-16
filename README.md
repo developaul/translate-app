@@ -34,10 +34,7 @@
 - [**Bun**](https://bun.sh/) - A fast JavaScript runtime, package manager and bundler.
 - [**ai**](https://sdk.vercel.ai/docs/introduction) - AI framework for TypeScript.
 - [**Vercel**](https://vercel.com/) - Deploy your app anywhere.
-- [**Vercek KV**](https://vercel.com/storage/kv) - Key-value store for Vercel.
 - [**Vercel Analytics**](https://vercel.com/analytics) - Analytics for Vercel.
-- [**Upstash Rate Limit**](https://github.com/upstash/ratelimit) - Rate limiter for Vercel.
-- [**Day.js**](https://day.js.org/) - Date and time library for JavaScript.
 - [**pdf2json**](https://github.com/modesty/pdf2json) - Convert PDF to JSON.
 
 <!-- Help me to describe features of this project -->
