@@ -25,12 +25,11 @@ export const Dropzone: FC<DropzoneProps> = ({ title, accept, onDrop }) => {
       >
         <input {...getInputProps()} />
         <Image
-          src={"/drag_and_drop.png"}
+          src={"/drag_and_drop.webp"}
           alt="drag and drop"
           priority
-          className="max-w-[150px] max-h-[150px]"
           width={150}
-          height={150}
+          height={90}
         />
         <p className="text-center">{title}</p>
       </div>
