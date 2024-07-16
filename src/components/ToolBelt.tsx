@@ -61,7 +61,7 @@ export const ToolBelt = () => {
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              <p>Configure Api Key</p>
+              <p>Setup Api Key</p>
             </TooltipContent>
           </Tooltip>
         </li>
