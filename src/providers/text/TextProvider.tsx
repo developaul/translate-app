@@ -34,11 +34,6 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const { completion, complete, setCompletion, error } = useCompletion({
     api: "/api/translate",
-    body: {
-      fromLanguage,
-      toLanguage,
-      apiKey,
-    },
   });
 
   const handleDebouncedTextChange = useDebouncedCallback((value: string) => {
@@ -82,9 +77,8 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
     complete(textToTranslateState, {
       body: { fromLanguage, toLanguage, apiKey },
     });
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [complete, fromLanguage, toLanguage]);
+  }, [complete, fromLanguage, toLanguage, apiKey]);
 
   useEffect(() => {
     if (!error) return;

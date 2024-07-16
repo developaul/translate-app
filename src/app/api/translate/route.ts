@@ -44,7 +44,6 @@ export async function POST(req: Request) {
       model,
       prompt,
       system: `Translate the following text from ${fromLanguage} to ${toLanguage}. If "Auto" is the from language, then try to detect the original language automatically after reading the text. Return directly the translated text. Do not include the prompt in the response.`,
-      maxTokens: 4096,
       temperature: 0.7,
     });
 
@@ -58,7 +57,7 @@ export async function POST(req: Request) {
         success: false,
         message,
       },
-      { status: 400 }
+      { status: 401 }
     );
   }
 }

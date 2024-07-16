@@ -5,15 +5,18 @@ import { useCompletion } from "ai/react";
 
 import { imageContext } from "./imageContext";
 import { languageContext } from "../language";
-import { errorContext } from "../error";
 import { fileToBase64 } from "@/lib/utils";
+import { errorContext } from "../error";
+import { setupContext } from "../setup";
 
 export const ImageProvider: FC<PropsWithChildren> = ({ children }) => {
   const [file, setFile] = useState<File | null>(null);
 
-  const { handleShowRateLimitError } = useContext(errorContext);
+  const { handleShowMessageError } = useContext(errorContext);
 
   const { fromLanguage, toLanguage } = useContext(languageContext);
+
+  const { apiKey } = useContext(setupContext);
 
   const { completion, complete, isLoading, setCompletion, error } =
     useCompletion({
@@ -33,16 +36,16 @@ export const ImageProvider: FC<PropsWithChildren> = ({ children }) => {
     async function run() {
       if (file === null) return;
       const image = await fileToBase64(file);
-      complete("", { body: { fromLanguage, toLanguage, image } });
+      complete("", { body: { fromLanguage, toLanguage, image, apiKey } });
     }
 
     run();
-  }, [complete, file, fromLanguage, toLanguage]);
+  }, [complete, file, fromLanguage, toLanguage, apiKey]);
 
   useEffect(() => {
     if (!error) return;
 
-    handleShowRateLimitError(error.message);
+    handleShowMessageError(error.message);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
