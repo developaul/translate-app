@@ -4,7 +4,7 @@
 
 <div align="center">
   <a href="https://talk-translate.vercel.app" target="_blank">
-    <img src="https://github.com/developaul/translate-app/assets/59939843/15e601e1-1012-45f1-93e9-78acc5500193" alt="Translate App" >
+    <img src="https://github.com/user-attachments/assets/c2e5e67c-c2c7-4c4b-8e8d-c67dc554bc20" alt="Translate App" >
   </a>
 </div>
 
