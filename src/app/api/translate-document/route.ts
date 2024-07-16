@@ -72,13 +72,10 @@ export async function POST(req: Request) {
 
     return result.toAIStreamResponse();
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "An unknown error occurred.";
-
     return Response.json(
       {
         success: false,
-        message,
+        message: "You need to provide your API Key",
       },
       { status: 401 }
     );

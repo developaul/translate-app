@@ -51,9 +51,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider delayDuration={DEFAULT_TOOLTIP_DELAY_DURATION}>
-            <ErrorProvider>
-              <Suspense>
-                <SetupProvider>
+            <SetupProvider>
+              <ErrorProvider>
+                <Suspense>
                   <ToolBeltProvider>
                     <LanguageProvider>
                       <TextProvider>
@@ -70,9 +70,9 @@ export default function RootLayout({
                       </TextProvider>
                     </LanguageProvider>
                   </ToolBeltProvider>
-                </SetupProvider>
-              </Suspense>
-            </ErrorProvider>
+                </Suspense>
+              </ErrorProvider>
+            </SetupProvider>
           </TooltipProvider>
         </ThemeProvider>
         <Toaster />
