@@ -19,9 +19,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const SetupDialog = () => {
-  const { setupIsOpen, handleCloseSetupDialog } = useContext(setupContext);
+  const { setupIsOpen, handleCloseSetupDialog, apiKey, setApiKey } =
+    useContext(setupContext);
 
-  const [apiKey, setApiKey] = useLocalStorage<string>("apiKey", "");
   const [showApiKey, setShowApiKey] = useState(false);
   const [value, setValue] = useState(apiKey ?? "");
 
@@ -94,7 +94,9 @@ export const SetupDialog = () => {
             </div>
           </div>
           <DialogFooter className="w-full">
-            <Button type="submit">Save changes</Button>
+            <Button className="w-full" type="submit">
+              Save changes
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

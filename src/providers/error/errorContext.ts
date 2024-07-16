@@ -3,7 +3,7 @@
 import { createContext } from "react";
 
 export interface ErrorContextArgs {
-  handleShowRateLimitError: (response: string) => void;
+  handleShowMessageError: (response: string) => void;
 }
 
 export const errorContext = createContext<ErrorContextArgs>(

@@ -3,9 +3,12 @@
 import { FC, PropsWithChildren, useState } from "react";
 
 import { setupContext } from "./setupContext";
+import { useLocalStorage } from "@/hooks";
 
 export const SetupProvider: FC<PropsWithChildren> = ({ children }) => {
   const [setupIsOpen, setSetupIsOpen] = useState(false);
+
+  const [apiKey, setApiKey] = useLocalStorage<string>("apiKey", "");
 
   const handleCloseSetupDialog = () => setSetupIsOpen(false);
 
@@ -14,6 +17,8 @@ export const SetupProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <setupContext.Provider
       value={{
+        apiKey,
+        setApiKey,
         setupIsOpen,
         handleOpenSetupDialog,
         handleCloseSetupDialog,

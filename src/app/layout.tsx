@@ -53,22 +53,24 @@ export default function RootLayout({
           <TooltipProvider delayDuration={DEFAULT_TOOLTIP_DELAY_DURATION}>
             <ErrorProvider>
               <Suspense>
-                <ToolBeltProvider>
-                  <LanguageProvider>
-                    <TextProvider>
-                      <ImageProvider>
-                        <DocumentProvider>
-                          <SpeechSynthesisProvider>
-                            <SpeechRecognitionProvider>
-                              <SetupProvider>{children}</SetupProvider>
-                              <Analytics />
-                            </SpeechRecognitionProvider>
-                          </SpeechSynthesisProvider>
-                        </DocumentProvider>
-                      </ImageProvider>
-                    </TextProvider>
-                  </LanguageProvider>
-                </ToolBeltProvider>
+                <SetupProvider>
+                  <ToolBeltProvider>
+                    <LanguageProvider>
+                      <TextProvider>
+                        <ImageProvider>
+                          <DocumentProvider>
+                            <SpeechSynthesisProvider>
+                              <SpeechRecognitionProvider>
+                                {children}
+                                <Analytics />
+                              </SpeechRecognitionProvider>
+                            </SpeechSynthesisProvider>
+                          </DocumentProvider>
+                        </ImageProvider>
+                      </TextProvider>
+                    </LanguageProvider>
+                  </ToolBeltProvider>
+                </SetupProvider>
               </Suspense>
             </ErrorProvider>
           </TooltipProvider>

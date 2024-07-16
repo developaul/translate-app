@@ -14,6 +14,7 @@ import {
 } from "@/lib/constants";
 import { languageContext } from "../language";
 import { errorContext } from "../error";
+import { setupContext } from "../setup";
 
 export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
@@ -25,20 +26,23 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [textToTranslateState, setTextToTranslateState] =
     useState(textToTranslate);
 
-  const { handleShowRateLimitError } = useContext(errorContext);
+  const { handleShowMessageError } = useContext(errorContext);
 
   const { fromLanguage, toLanguage } = useContext(languageContext);
+
+  const { apiKey } = useContext(setupContext);
 
   const { completion, complete, setCompletion, error } = useCompletion({
     api: "/api/translate",
     body: {
       fromLanguage,
       toLanguage,
+      apiKey,
     },
   });
 
   const handleDebouncedTextChange = useDebouncedCallback((value: string) => {
-    complete(value, { body: { fromLanguage, toLanguage } });
+    complete(value, { body: { fromLanguage, toLanguage, apiKey } });
   }, DEBOUNCE_TIME);
 
   const setTextToTranslate = (value: string) => {
@@ -75,7 +79,9 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
     if (textToTranslateState.trim().length < MIN_TEXT_TO_TRANSLATE_LENGTH)
       return;
 
-    complete(textToTranslateState, { body: { fromLanguage, toLanguage } });
+    complete(textToTranslateState, {
+      body: { fromLanguage, toLanguage, apiKey },
+    });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [complete, fromLanguage, toLanguage]);
@@ -83,7 +89,7 @@ export const TextProvider: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     if (!error) return;
 
-    handleShowRateLimitError(error.message);
+    handleShowMessageError(error.message);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);

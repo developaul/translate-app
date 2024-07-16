@@ -4,6 +4,8 @@ import { createContext } from "react";
 
 interface SetupContextArgs {
   setupIsOpen: boolean;
+  apiKey: string;
+  setApiKey: (value: string) => void;
   handleOpenSetupDialog: () => void;
   handleCloseSetupDialog: () => void;
 }
