@@ -68,30 +68,7 @@ npm install -g bun
 bun install
 ```
 
-3. Create a **.env** file with the following content:
-
-> 🚧 The environment variables must match the following schema
-
-```bash
-# OpenAI Provider
-OPENAI_API_KEY=
-
-# Vercel KV Store
-KV_URL=
-KV_REST_API_URL=
-KV_REST_API_TOKEN=
-KV_REST_API_READ_ONLY_TOKEN=
-```
-
-**OpenAI API Key**
-
-- [Get your OpenAI API key](https://platform.openai.com/account/api-keys).
-
-**Vercel KV Store**
-
-- [Get your Vercel KV Store](https://vercel.com/docs/storage/vercel-kv/quickstart).
-
-4. Run the development server:
+3. Run the development server:
 
 ```bash
 bun run dev
