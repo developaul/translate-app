@@ -3,17 +3,20 @@
 import { FC, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { useCompletion } from "ai/react";
 
-import { fileToBase64 } from "@/lib/utils";
 import { documentContext } from "./documentContext";
 import { languageContext } from "../language";
+import { fileToBase64 } from "@/lib/utils";
 import { errorContext } from "../error";
+import { setupContext } from "../setup";
 
 export const DocumentProvider: FC<PropsWithChildren> = ({ children }) => {
   const [file, setFile] = useState<File | null>(null);
 
-  const { handleShowRateLimitError } = useContext(errorContext);
+  const { handleShowMessageError } = useContext(errorContext);
 
   const { fromLanguage, toLanguage } = useContext(languageContext);
+
+  const { apiKey } = useContext(setupContext);
 
   const { completion, complete, isLoading, setCompletion, error } =
     useCompletion({
@@ -35,16 +38,16 @@ export const DocumentProvider: FC<PropsWithChildren> = ({ children }) => {
 
       const document = await fileToBase64(file);
 
-      complete("", { body: { fromLanguage, toLanguage, document } });
+      complete("", { body: { fromLanguage, toLanguage, document, apiKey } });
     }
 
     run();
-  }, [complete, file, fromLanguage, toLanguage]);
+  }, [complete, file, fromLanguage, toLanguage, apiKey]);
 
   useEffect(() => {
     if (!error) return;
 
-    handleShowRateLimitError(error.message);
+    handleShowMessageError(error.message);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
 

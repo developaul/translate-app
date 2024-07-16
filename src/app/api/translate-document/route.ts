@@ -1,14 +1,8 @@
 import { z } from "zod";
-import { openai } from "@ai-sdk/openai";
+import { createOpenAI } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import PDFParser, { Output } from "pdf2json";
-import { Ratelimit } from "@upstash/ratelimit";
-import { kv } from "@vercel/kv";
 
-import {
-  RATE_LIMIT_REQUESTS_DOCUMENT,
-  RATE_LIMIT_TIME_DOCUMENT,
-} from "@/lib/constants";
 import { dataURLtoFile } from "@/lib/utils";
 
 // Allow streaming responses up to 30 seconds
@@ -27,37 +21,10 @@ const RequestSchema = z.object({
   fromLanguage: z.string(),
   toLanguage: z.string(),
   document: z.string(),
+  apiKey: z.string(),
 });
 
 export async function POST(req: Request) {
-  // Rate limit the request
-  const ip = req.headers.get("x-forwarded-for");
-  const ratelimit = new Ratelimit({
-    redis: kv,
-    limiter: Ratelimit.slidingWindow(
-      RATE_LIMIT_REQUESTS_DOCUMENT,
-      RATE_LIMIT_TIME_DOCUMENT
-    ),
-  });
-
-  const {
-    success: successRateLimit,
-    limit,
-    reset,
-    remaining,
-  } = await ratelimit.limit(`ratelimit_document_${ip}`);
-
-  if (!successRateLimit) {
-    return Response.json(
-      {
-        success: false,
-        message: "You have reached your request limit for the day.",
-        data: { limit, remaining, reset },
-      },
-      { status: 429 }
-    );
-  }
-
   // Validate the request body
   const body = await req.json();
   const { success: successSchema, data, error } = RequestSchema.safeParse(body);
@@ -74,7 +41,7 @@ export async function POST(req: Request) {
   }
 
   // Controller for the translation
-  const { fromLanguage, toLanguage, document } = data;
+  const { fromLanguage, toLanguage, document, apiKey } = data;
 
   const file = dataURLtoFile(document);
   const fileArrayBuffer = await file.arrayBuffer();
@@ -88,15 +55,32 @@ export async function POST(req: Request) {
     }).join("");
   });
 
-  const model = openai("gpt-4o");
-
-  const result = await streamText({
-    model,
-    system: `Translate the following text from ${fromLanguage} to ${toLanguage}. If "Auto" is the from language, then try to detect the original language automatically after reading the text. Return directly the translated text. Do not include the prompt in the response.`,
-    prompt: textToTranslate.toString(),
-    maxTokens: 4096,
-    temperature: 0.7,
+  const openai = createOpenAI({
+    compatibility: "strict",
+    apiKey,
   });
 
-  return result.toAIStreamResponse();
+  const model = openai("gpt-4o");
+
+  try {
+    const result = await streamText({
+      model,
+      system: `Translate the following text from ${fromLanguage} to ${toLanguage}. If "Auto" is the from language, then try to detect the original language automatically after reading the text. Return directly the translated text. Do not include the prompt in the response.`,
+      prompt: textToTranslate.toString(),
+      temperature: 0.7,
+    });
+
+    return result.toAIStreamResponse();
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "An unknown error occurred.";
+
+    return Response.json(
+      {
+        success: false,
+        message,
+      },
+      { status: 401 }
+    );
+  }
 }

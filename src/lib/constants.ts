@@ -82,6 +82,3 @@ export const enum SearchParams {
   OPTION = "op",
   TEXT = "text",
 }
-
-export const RATE_LIMIT_REQUESTS_DOCUMENT = 1;
-export const RATE_LIMIT_TIME_DOCUMENT = "1d";
