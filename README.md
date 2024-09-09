@@ -35,7 +35,7 @@
 - [**ai**](https://sdk.vercel.ai/docs/introduction) - AI framework for TypeScript.
 - [**Vercel**](https://vercel.com/) - Deploy your app anywhere.
 - [**Vercel Analytics**](https://vercel.com/analytics) - Analytics for Vercel.
-- [**pdf2json**](https://github.com/modesty/pdf2json) - Convert PDF to JSON.
+- [**pdf-parse**](https://gitlab.com/autokent/pdf-parse) - Convert PDF to Text.
 
 <!-- Help me to describe features of this project -->
 

@@ -1,21 +1,14 @@
 import { z } from "zod";
 import { createOpenAI } from "@ai-sdk/openai";
 import { streamText } from "ai";
-import PDFParser, { Output } from "pdf2json";
+import pdf from "pdf-parse";
 
-import { dataURLtoFile } from "@/lib/utils";
+import { validPrefixes } from "@/lib/constants";
+
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-const pdfParser = new PDFParser();
-
-const waitForPdfData = (): Promise<Output> => {
-  return new Promise((resolve, reject) => {
-    pdfParser.on("pdfParser_dataError", reject);
-    pdfParser.on("pdfParser_dataReady", resolve);
-  });
-};
 
 const RequestSchema = z.object({
   fromLanguage: z.string(),
@@ -43,18 +36,40 @@ export async function POST(req: Request) {
   // Controller for the translation
   const { fromLanguage, toLanguage, document, apiKey } = data;
 
-  const file = dataURLtoFile(document);
-  const fileArrayBuffer = await file.arrayBuffer();
-  pdfParser.parseBuffer(fileArrayBuffer as Buffer, 9);
+  const matchedPrefix = validPrefixes.find((prefix) =>
+    document.startsWith(prefix)
+  );
+  
+  if (!matchedPrefix) {
+    return Response.json(
+      {
+        success: false,
+        message: "The Data URI format is invalid",
+      },
+      { status: 401 }
+    );
+  }
 
-  const pdfData = await waitForPdfData();
+  const base64Data = document.slice(matchedPrefix.length);
 
-  const textToTranslate = pdfData.Pages.map((page) => {
-    return page.Texts.map((text) => {
-      return text.R.map(({ T }) => decodeURIComponent(T).trim()).join("");
-    }).join("");
-  });
+  const pdfBuffer = Buffer.from(base64Data, "base64");
 
+  let textToTranslate = "";
+
+  try {
+    const data = await pdf(pdfBuffer);
+    textToTranslate = data.text;
+  } catch (error) {    
+    return Response.json(
+      {
+        success: false,
+        message: "Error parsing the PDF document",
+      },
+      { status: 500 }
+    );
+  }
+
+  // Service for the translation
   const openai = createOpenAI({
     compatibility: "strict",
     apiKey,
