@@ -8,6 +8,8 @@ on:
       - '**.jpeg'
       - '**.png'
       - '**.webp'
+      - '**.ico'
+      - '**.svg'
 jobs:
   build:
     # Only run on Pull Requests within the same repository, and not from forks.
