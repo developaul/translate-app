@@ -82,3 +82,8 @@ export const enum SearchParams {
   OPTION = "op",
   TEXT = "text",
 }
+
+export const validPrefixes = [
+  "data:application/pdf;base64,",
+  "data:@file/pdf;base64,",
+];
