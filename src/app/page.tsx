@@ -12,7 +12,6 @@ const HomePage: NextPage = () => {
     <>
       <Header />
       <Translate />
-
       <SetupDialog />
     </>
   );

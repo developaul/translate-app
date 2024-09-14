@@ -1,10 +1,9 @@
 "use client";
 
-import { FC, useState, ChangeEvent, FormEvent, useContext } from "react";
+import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
-import { useLocalStorage } from "@/hooks";
 import { setupContext } from "@/providers";
 import { Button } from "@/components/ui/button";
 import {
