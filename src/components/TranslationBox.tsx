@@ -7,7 +7,7 @@ import { TranslationBoxTypes } from "@/lib/constants";
 import { Button } from "./ui/button";
 import { textContext } from "@/providers";
 
-export interface TranslationBoxProps {
+interface TranslationBoxProps {
   type: TranslationBoxTypes;
   textareaProps?: TextareaHTMLAttributes<HTMLTextAreaElement>;
 }

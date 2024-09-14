@@ -26,8 +26,8 @@ export const Dropzone: FC<DropzoneProps> = ({ title, accept, onDrop }) => {
         <input {...getInputProps()} />
         <Image
           src={"/drag_and_drop.webp"}
+          loading='lazy'
           alt="drag and drop"
-          priority
           width={150}
           height={90}
         />

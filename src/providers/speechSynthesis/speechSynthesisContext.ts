@@ -3,7 +3,7 @@
 import { createContext } from "react";
 import { HandleStartSpeakingArgs, SpeakingState } from "@/interfaces";
 
-export interface SpeechSynthesisContextArgs {
+interface SpeechSynthesisContextArgs {
   speakingState: SpeakingState;
   handleStartSpeaking: (args: HandleStartSpeakingArgs) => void;
   handleStopSpeaking: () => void;

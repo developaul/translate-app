@@ -2,7 +2,7 @@
 
 import { createContext } from "react";
 
-export interface LanguageContextArgs {
+interface LanguageContextArgs {
   fromLanguage: string;
   toLanguage: string;
   handleChangeFromLanguage: (fromLanguage: string) => void;

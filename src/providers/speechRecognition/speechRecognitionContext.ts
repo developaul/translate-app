@@ -2,7 +2,7 @@
 
 import { createContext } from "react";
 
-export interface SpeechRecognitionContextArgs {
+interface SpeechRecognitionContextArgs {
   handleStartRecording: () => void;
   handleStopRecording: () => void;
   isRecording: boolean;

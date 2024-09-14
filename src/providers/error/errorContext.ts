@@ -2,7 +2,7 @@
 
 import { createContext } from "react";
 
-export interface ErrorContextArgs {
+interface ErrorContextArgs {
   handleShowMessageError: (response: string) => void;
 }
 

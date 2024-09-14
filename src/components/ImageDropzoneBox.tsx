@@ -23,7 +23,6 @@ export const ImageDropzoneBox = () => {
       {image ? (
         <>
           <Image
-            priority
             className="w-full h-full object-cover max-w-[150px] max-h-[150px]"
             src={image}
             alt="preview image"

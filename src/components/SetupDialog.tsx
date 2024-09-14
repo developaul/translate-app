@@ -2,7 +2,6 @@
 
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
 
 import { setupContext } from "@/providers";
 import { Button } from "@/components/ui/button";
@@ -50,24 +49,24 @@ export const SetupDialog = () => {
             <DialogTitle>Setup Api Key</DialogTitle>
             <DialogDescription>
               Enter your{" "}
-              <Link
+              <a
                 className="underline font-bold"
                 target="_blank"
                 rel="noreferrer"
                 href="https://platform.openai.com/account/api-keys"
               >
                 API key
-              </Link>{" "}
+              </a>{" "}
               to start using the app. Your key is not stored. You can verify
               this in the{" "}
-              <Link
+              <a
                 className="underline font-bold"
                 target="_blank"
                 rel="noreferrer"
                 href="https://github.com/developaul/translate-app"
               >
                 open-source code
-              </Link>
+              </a>
               .
             </DialogDescription>
           </DialogHeader>
