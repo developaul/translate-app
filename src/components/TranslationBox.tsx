@@ -1,4 +1,4 @@
-import { FC, TextareaHTMLAttributes, useContext, useRef } from "react";
+import { FC, TextareaHTMLAttributes, useContext } from "react";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { TranslationSourceActions } from "./TranslationSourceActions";
 import { TranslationTargetActions } from "./TranslationTargetActions";
