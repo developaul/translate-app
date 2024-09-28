@@ -2,6 +2,9 @@
   "name": "translate-app",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18.17.0"
+  },
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
