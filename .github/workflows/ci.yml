@@ -30,5 +30,3 @@ jobs:
         run: |
           bun add -g @lhci/cli@0.14.x
           bunx lhci autorun
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
