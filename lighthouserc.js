@@ -9,13 +9,7 @@ module.exports = {
       target: 'temporary-public-storage'
     },
     assert: {
-      preset: 'lighthouse:recommended',
-      assertions: {
-        'button-name': 'off',
-        'errors-in-console': 'off',
-        'link-name': 'off',
-        'unused-javascript': 'off'
-      }
+      preset: 'lighthouse:recommended'
     }
   }
 };
