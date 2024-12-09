@@ -8,12 +8,20 @@ on:
     branches:
       - main
 
+# Agregamos la sección de permisos
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write    # Esto es crucial para los status checks
+
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}  # Asegura que estamos en el commit correcto del PR
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
